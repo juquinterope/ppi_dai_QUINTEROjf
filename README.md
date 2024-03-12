@@ -20,3 +20,6 @@ Scipy: Aunque no es la principal librería utilizada, Scipy se emplea para posib
 Geopandas: Esencial para representar geográficamente los lugares de interés y rutas recomendadas. Permite visualizar de manera clara y concisa la información relacionada con destinos turísticos.
 
 ¡Esperamos que disfrutes de tus viajes con Turismo Inteligente!
+
+## Mas información
+Desarrollado por: Juan Fernando Quintero Perez, estudiante Ingenieria en Sistemas (5) - Universidad Nacional de Colombia.
