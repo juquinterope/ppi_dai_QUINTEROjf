@@ -23,4 +23,4 @@ Geopandas: Esencial para representar geográficamente los lugares de interés y 
 ## Mas información
 Desarrollado por: Juan Fernando Quintero Perez - Universidad Nacional de Colombia.
 
-Contacto : Linkedln
+Contacto : [Linkedln](https://www.linkedin.com/in/juan-fernando-quintero-perez-9097b7279/)
