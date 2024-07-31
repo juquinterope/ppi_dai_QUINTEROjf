@@ -1,4 +1,4 @@
-# Turismo Inteligente
+# ExploreMedellin
 ## Descripción
 Turismo Inteligente es una aplicación diseñada para brindar a los viajeros experiencias turísticas personalizadas y únicas. La idea principal es utilizar datos turísticos para sugerir itinerarios personalizados, recomendaciones gastronómicas y actividades basadas en las preferencias individuales de los usuarios.
 
