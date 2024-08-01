@@ -22,12 +22,14 @@ jobs:
 
     - name: Check for style violations
       run: |
+        git config --global user.email "action@github.com"
+        git config --global user.name "GitHub Action"
         git diff --exit-code || (
-          echo "autopep8 encontro problemas" &&
+          echo "autopep8 found issues in the code" &&
           echo "Committing changes" &&
-          git config --global user.email "action@github.com" &&
-          git config --global user.name "GitHub Action" &&
           git add . &&
           git commit -m "style: autopep8 fixes" &&
           git push
         )
+      env:
+        GITHUB_TOKEN: ${{ secrets.PAT }}
