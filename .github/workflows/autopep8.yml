@@ -28,7 +28,7 @@ jobs:
 
     - name: Run autopep8
       run: |
-        autopep8 --exit-code --recursive --in-place --aggressive --aggressive .
+        autopep8 --in-place --recursive .
 
     - name: Commit and push changes
       uses: EndBug/add-and-commit@v9
