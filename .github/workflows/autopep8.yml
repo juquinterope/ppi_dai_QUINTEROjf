@@ -38,4 +38,4 @@ jobs:
         message: 'Apply autopep8 formatting'
         add: '.'
       env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        GITHUB_TOKEN: ${{ secrets.PAT }}
