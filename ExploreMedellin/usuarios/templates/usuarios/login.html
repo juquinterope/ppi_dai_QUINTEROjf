@@ -3,12 +3,13 @@
 {% block content %}
 <div class="row justify-content-center">
     <div class="col-md-6">
-        <h2>Registro de Usuario</h2>
+        <h2>Iniciar Sesión</h2>
         <form method="post">
             {% csrf_token %}
             {{ form.as_p }}
-            <button type="submit" class="btn btn-primary">Registrar</button>
+            <button type="submit" class="btn btn-primary">Iniciar Sesión</button>
         </form>
     </div>
 </div>
 {% endblock %}
+
