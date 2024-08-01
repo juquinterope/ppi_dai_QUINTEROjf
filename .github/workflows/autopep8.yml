@@ -21,7 +21,7 @@ jobs:
       - name: Commit autopep8 changes
         if: steps.autopep8.outputs.exit-code == '2'
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.PAT }}
         run: |
           git config --global user.name 'juquinterope'
           git config --global user.email 'juquinterope@unal.edu.co'
