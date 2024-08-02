@@ -52,7 +52,7 @@ MIDDLEWARE = [
 
 SESSION_ENGINE = 'django.contrib.sessions.backends.db'
 
-ROOT_URLCONF = 'ExploreMedellin.urls'
+ROOT_URLCONF = 'ExploreAntioquia.urls'
 
 TEMPLATES = [
     {
@@ -70,7 +70,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'ExploreMedellin.wsgi.application'
+WSGI_APPLICATION = 'ExploreAntioquia.wsgi.application'
 
 
 # Database
