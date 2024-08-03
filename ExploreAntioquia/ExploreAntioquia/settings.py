@@ -11,6 +11,8 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 
 from pathlib import Path
+import os
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -25,7 +27,7 @@ SECRET_KEY = 'django-insecure-w&zjrn!#eu5-1+aiyg!-w^36t*!%j@&hfy9hx(ov%$1zrz_bvj
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['juanqu.pythonanywhere.com']
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -79,10 +81,15 @@ WSGI_APPLICATION = 'ExploreAntioquia.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': "exploreantioquiadb",
+        'USER': "admin",
+        'PASSWORD': "jkl159-78",
+        'HOST': "exploreantioquiadb.czg0uoeayhi2.us-west-2.rds.amazonaws.com",
+        'PORT': 3306,
     }
 }
+
 
 
 # Password validation
