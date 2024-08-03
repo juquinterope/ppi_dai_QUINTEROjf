@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Explorar Municipios de Antioquia</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <style>
+        #map { height: 600px; width: 100%; }
+    </style>
+</head>
+<body>
+    <h1>Explorar Municipios de Antioquia</h1>
+    <div id="map"></div>
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <script>
+        // Inicializar el mapa
+        var map = L.map('map').setView([6.251, -75.567], 8);
+
+        // Añadir capa base
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom: 18,
+        }).addTo(map);
+
+        // Datos de los municipios en formato GeoJSON
+        var municipios = {{ municipios_json|safe }};
+
+        // Añadir los municipios al mapa
+        L.geoJSON(municipios).addTo(map);
+    </script>
+</body>
+</html>

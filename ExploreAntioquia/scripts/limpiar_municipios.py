@@ -1,6 +1,6 @@
 import pandas as pd
 
-df = pd.read_csv('C:\\Users\\juanf\\Desktop\\ppi_dai_QUINTEROjf\\ExploreAntioquia\\data\\municipios.csv')
+df = pd.read_csv('../data/municipios.csv')
 print(df.head())
 
 # print(df.isnull().count())
