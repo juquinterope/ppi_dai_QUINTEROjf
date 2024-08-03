@@ -5,7 +5,7 @@ print(df.head())
 
 # print(df.isnull().count())
 print(df.columns)
-columns = ['Nombre Municipio', 'Tipo Centro Poblado', 'Longitud','Latitud']
+columns = ['Nombre Municipio', 'Tipo Centro Poblado', 'Longitud', 'Latitud']
 df = df[columns]
 
 # En el dataframe, esta presente no solo el municipio sino tambien

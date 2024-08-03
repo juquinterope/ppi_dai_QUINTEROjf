@@ -38,7 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'usuarios',  # Configuracion de usuarios
-    'exploracion', # Localizacion/Exploracion municipios
+    'exploracion',  # Localizacion/Exploracion municipios
 ]
 
 MIDDLEWARE = [
