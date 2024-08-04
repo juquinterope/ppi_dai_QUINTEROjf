@@ -1,12 +1,12 @@
-# ExploreMedellin
+# ExploreAntioquia
 ## Descripción
-ExploreMedellin es una aplicación diseñada para brindar a los viajeros experiencias turísticas personalizadas y únicas. La idea principal es utilizar datos turísticos para sugerir itinerarios personalizados, recomendaciones gastronómicas y actividades basadas en las preferencias individuales de los usuarios.
+ExploreAntioquia es una aplicación diseñada para brindar a los viajeros experiencias turísticas personalizadas y únicas. La idea principal es utilizar datos turísticos para sugerir itinerarios personalizados, recomendaciones gastronómicas y actividades basadas en las preferencias individuales de los usuarios.
 
 ## Justificación
 En un mundo donde la industria del turismo está en constante crecimiento, los viajeros buscan cada vez más experiencias personalizadas y adaptadas a sus intereses específicos. Turismo Inteligente busca cubrir esta necesidad al proporcionar recomendaciones basadas en datos, permitiendo a los usuarios explorar destinos de una manera más significativa y satisfactoria.
 
 ## Uso de Librerías
-Para llevar a cabo su funcionalidad, ExploreMedellin hace uso de varias librerías de Python:
+Para llevar a cabo su funcionalidad, se hace uso de varias librerías de Python:
 
 NumPy: Se utiliza para cálculos relacionados con la planificación de itinerarios y para gestionar las preferencias del usuario de manera eficiente.
 
@@ -18,7 +18,7 @@ Scipy: Aunque no es la principal librería utilizada, Scipy se emplea para posib
 
 Geopandas: Esencial para representar geográficamente los lugares de interés y rutas recomendadas. Permite visualizar de manera clara y concisa la información relacionada con destinos turísticos.
 
-¡Esperamos que disfrutes de tus viajes con ExploreMedellin!
+¡Esperamos que disfrutes de tus viajes con ExploreAntioquia!
 
 ## Mas información
 Desarrollado por: Juan Fernando Quintero Perez - Universidad Nacional de Colombia.
