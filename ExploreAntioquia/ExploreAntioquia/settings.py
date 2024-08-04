@@ -79,16 +79,7 @@ WSGI_APPLICATION = 'ExploreAntioquia.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': "exploreantioquiadb",
-        'USER': "admin",
-        'PASSWORD': "jkl159-78",
-        'HOST': "exploreantioquiadb.czg0uoeayhi2.us-west-2.rds.amazonaws.com",
-        'PORT': 3306,
-    }
-}
+
 
 
 
