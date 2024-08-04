@@ -168,3 +168,4 @@ cython_debug/
 
 # Solo debe correrse una vez, luego no hacer push
 .ebextensions
+.config
