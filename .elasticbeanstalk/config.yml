@@ -2,6 +2,10 @@ branch-defaults:
   main:
     environment: explore-eb
     group_suffix: null
+environment-defaults:
+  explore-eb:
+    branch: null
+    repository: null
 global:
   application_name: ExploreaAntioquia
   branch: null
