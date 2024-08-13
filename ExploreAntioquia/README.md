@@ -39,7 +39,7 @@ Antes de comenzar, asegúrate de tener instalados en tu máquina local:
 4. **Ejecutar el contenedor**
 
    ```bash
-   docker run -p 8000:8000 --env-file .env your_username/explore-antioquia:1.0
+   docker run -p 8000:8000 --env-file .env juanqu/explore-antioquia:1.0
    ```
 
    Asi se puede correr la imagen cargando tus crendenciales.
