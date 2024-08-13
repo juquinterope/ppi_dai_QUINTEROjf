@@ -1,2 +1,5 @@
 # Csv con los municipios
 *.csv
+
+# Credenciales
+*.env
