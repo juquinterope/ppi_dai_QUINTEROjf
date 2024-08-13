@@ -26,12 +26,16 @@ Antes de comenzar, asegúrate de tener instalados en tu máquina local:
 
    **Ejemplo de archivo .env**
    DB_NAME=tu_nombre_de_base_de_datos
+   
    DB_USER=tu_usuario_de_base_de_datos
+   
    DB_PASSWORD=tu_contraseña_de_base_de_datos
+   
    DB_HOST=db
+   
    DB_PORT=5432
 
-3. **Ejecutar el contenedor**
+4. **Ejecutar el contenedor**
 
    ```bash
    docker run -p 8000:8000 --env-file .env your_username/explore-antioquia:1.0
