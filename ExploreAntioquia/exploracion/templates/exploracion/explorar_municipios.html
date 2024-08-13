@@ -1,13 +1,35 @@
+{% load static %}
 <!DOCTYPE html>
 <html>
 <head>
     <title>Explorar Municipios de Antioquia</title>
     <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
     <!-- Bootstrap CSS -->
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <style>
-        #map { height: 600px; width: 100%; }
-    </style>
+        #map {
+            height: 600px;
+            width: 100%;
+        }
+    
+        #info-panel {
+            width: 100%; /* Hace que el recuadro ocupe el 100% del ancho del contenedor */
+            max-width: 1200px; /* Opcional: define un ancho máximo si es necesario */
+            height: 500px; /* Ajusta la altura aquí */
+            background: white;
+            padding: 20px; /* Ajusta el padding si es necesario */
+            border: 1px solid #ccc;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            margin-top: 10px; /* Espacio entre el mapa y el recuadro */
+            box-sizing: border-box; /* Incluye padding y border en el cálculo del ancho total */
+            overflow: auto; /* Asegura que el contenido se pueda desplazar si excede la altura */
+        }
+    
+        #info-panel h3 {
+            font-size: 1.5em; /* Ajusta el tamaño de la fuente si es necesario */
+        }
+    </style>    
 </head>
 <body>
     <!-- Navbar -->
@@ -39,21 +61,17 @@
         </div>
     </nav>
     <div id="map"></div>
-    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
-    <script>
-        // Inicializar el mapa
-        var map = L.map('map').setView([6.251, -75.567], 8);
 
-        // Añadir capa base
-        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            maxZoom: 18,
-        }).addTo(map);
+    <div id="info-panel">
+        <h3>Selecciona un municipio para ver su información</h3>
+    </div>
 
-        // Datos de los municipios en formato GeoJSON
-        var municipios = {{ municipios_json|safe }};
-
-        // Añadir los municipios al mapa
-        L.geoJSON(municipios).addTo(map);
+    <!-- Datos GeoJSON como JSON en un script oculto -->
+    <script type="application/json" id="municipios-data">
+        {{ municipios_json|safe }}
     </script>
+
+    <!-- Incluir el archivo JavaScript -->
+    <script src="{% static 'exploracion/js/mapa.js' %}"></script>
 </body>
 </html>

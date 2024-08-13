@@ -1,5 +1,6 @@
 import os
 import geopandas as gpd
+from django.http import JsonResponse
 from django.shortcuts import render
 from django.conf import settings
 
@@ -17,3 +18,21 @@ def explorar_municipios(request):
 
     # Renderizar la plantilla con los datos de los municipios
     return render(request, 'exploracion/explorar_municipios.html', {'municipios_json': municipios_json})
+
+
+def municipio_detalle(request, id):
+    # Ruta al archivo GeoJSON
+    geojson_path = os.path.join(settings.BASE_DIR, 'data', 'municipios_antioquia.geojson')
+
+    # Cargar el GeoDataFrame desde el archivo GeoJSON
+    gdf = gpd.read_file(geojson_path)
+
+    # Obtener información del municipio seleccionado
+    municipio = gdf[gdf['Nombre Municipio'] == id].iloc[0]
+    municipio_info = {
+        'nombre': municipio['Nombre Municipio'],
+        'descripcion': municipio['Descripcion']  # Ajusta según el nombre del campo
+    }
+
+    # Devolver los datos como JSON
+    return JsonResponse(municipio_info)
