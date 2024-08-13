@@ -22,7 +22,7 @@ Antes de comenzar, asegúrate de tener instalados en tu máquina local:
 
    Para que la aplicación funcione correctamente, hay configurar el archivo .env
    El archivo debe estar en la raíz del directorio del proyecto y debe incluir las credenciales para la base de datos.
-   Esta base de datos puede ser local.
+   Esta base de datos puede ser local, en cualquier caso la app usa POSTGRESQL.
 
    **Ejemplo de archivo .env**
    
