@@ -25,6 +25,7 @@ Antes de comenzar, asegúrate de tener instalados en tu máquina local:
    Esta base de datos puede ser local.
 
    **Ejemplo de archivo .env**
+   
    DB_NAME=tu_nombre_de_base_de_datos
    
    DB_USER=tu_usuario_de_base_de_datos
