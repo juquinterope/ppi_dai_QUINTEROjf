@@ -8,7 +8,7 @@ from django.conf import settings
 def explorar_municipios(request):
     # Ruta al archivo GeoJSON
     geojson_path = os.path.join(
-        settings.BASE_DIR, 'data', 'municipios_antioquia.geojson')
+        settings.BASE_DIR, 'data', 'municipios_antioquia_actualizado.geojson')
 
     # Cargar el GeoDataFrame desde el archivo GeoJSON
     gdf = gpd.read_file(geojson_path)
@@ -22,17 +22,21 @@ def explorar_municipios(request):
 
 def municipio_detalle(request, id):
     # Ruta al archivo GeoJSON
-    geojson_path = os.path.join(settings.BASE_DIR, 'data', 'municipios_antioquia.geojson')
+    geojson_path = os.path.join(settings.BASE_DIR, 'data', 'municipios_antioquia_actualizado.geojson')
 
     # Cargar el GeoDataFrame desde el archivo GeoJSON
     gdf = gpd.read_file(geojson_path)
 
+    # Codificar los espacios de las url: %20 == ' '
+    id = id.replace('%20', ' ')
+
     # Obtener información del municipio seleccionado
+    # Obtener solo la fila del municipio de interes
     municipio = gdf[gdf['Nombre Municipio'] == id].iloc[0]
     municipio_info = {
         'nombre': municipio['Nombre Municipio'],
-        'descripcion': municipio['Descripcion']  # Ajusta según el nombre del campo
+        'descripcion': municipio['Descripcion']
     }
-
+    
     # Devolver los datos como JSON
     return JsonResponse(municipio_info)

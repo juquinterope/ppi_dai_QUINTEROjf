@@ -6,23 +6,39 @@ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     maxZoom: 18,
 }).addTo(map);
 
-// Datos de los municipios en formato GeoJSON
+// Datos de los municipios en formato GeoJSON,
+// desde la etiqueta con id=municipios-data,
+// esta etiqueta carga el geojson en el template 'explorar_municipios.html'
 var municipiosGeoJSON = JSON.parse(document.getElementById('municipios-data').textContent);
 
-// Añadir los municipios al mapa
+// Añadir los municipios al mapa,
+// onEachFeature : funcion para aplicarlo a todos los objetos (municipios)
 L.geoJSON(municipiosGeoJSON, {
     onEachFeature: onEachFeature
 }).addTo(map);
 
 // Función para manejar la selección de un municipio
+// onEachFeature, aqui se define que funcion aplicar
 function onEachFeature(feature, layer) {
     layer.on({
+        // Al hacer click en un objeto (municipio)
         click: function(e) {
+            // Obtener el ID del municipio seleccionado
             var municipioId = feature.properties['Nombre Municipio'];
-
-            // Actualizar el recuadro de información
-            fetch('/municipio-detalle/' + municipioId + '/')
-                .then(response => response.json())
+            // Construir la url para consultar la informacion del municipio
+            var url = window.location.origin + '/exploracion/municipio-detalle/' + encodeURIComponent(municipioId) + '/';  // Construye la URL completa
+            
+            // fetch() hace la consulta http
+            fetch(url)
+                // Cacheo de errores
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok ' + response.statusText);
+                    }
+                    return response.json();
+                })
+                // En el tag 'info-panel' del template en cuestion (explorar_municipio.html),
+                // cargar la informacion consultada del geojson
                 .then(data => {
                     var infoHtml = `
                         <h3>${data.nombre}</h3>
@@ -30,6 +46,7 @@ function onEachFeature(feature, layer) {
                     `;
                     document.getElementById('info-panel').innerHTML = infoHtml;
                 })
+                // Errores
                 .catch(error => {
                     console.error('Error al cargar la información del municipio:', error);
                     document.getElementById('info-panel').innerHTML = '<p>Error al cargar la información.</p>';
