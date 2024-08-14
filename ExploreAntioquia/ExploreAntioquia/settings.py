@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'usuarios',  # Configuracion de usuarios
     'exploracion',  # Localizacion/Exploracion municipios
+    'planeacion', # Planear itinerios
 ]
 
 MIDDLEWARE = [
