@@ -80,6 +80,7 @@ for index, row in gdf.iterrows():
     gdf.at[index, 'Descripcion'] = descripcion
 
 # Guardar el GeoDataFrame actualizado
-gdf.to_file('../ExploreAntioquia/data/municipios_antioquia_actualizado.geojson', driver='GeoJSON')
+gdf.to_file(
+    '../ExploreAntioquia/data/municipios_antioquia_actualizado.geojson', driver='GeoJSON')
 
 driver.quit()
