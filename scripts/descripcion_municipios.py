@@ -8,7 +8,7 @@ from selenium.webdriver.common.by import By
 driver = webdriver.Chrome()
 
 # Cargar el GeoDataFrame
-gdf = gpd.read_file('../ExploreAntioquia/data/municipios_antioquia.geojson')
+gdf = gpd.read_file('/data/municipios_antioquia.geojson')
 
 # Función para formatear el nombre
 
@@ -80,7 +80,6 @@ for index, row in gdf.iterrows():
     gdf.at[index, 'Descripcion'] = descripcion
 
 # Guardar el GeoDataFrame actualizado
-gdf.to_file(
-    '../ExploreAntioquia/data/municipios_antioquia_actualizado.geojson', driver='GeoJSON')
+gdf.to_file('../ExploreAntioquia/data/municipios_antioquia_actualizado.geojson', driver='GeoJSON')
 
 driver.quit()

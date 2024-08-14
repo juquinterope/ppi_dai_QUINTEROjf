@@ -1,6 +1,6 @@
 import pandas as pd
 
-df = pd.read_csv('../ExploreAntioquia/data/municipios.csv')
+df = pd.read_csv('/data/municipios.csv')
 print(df.head())
 
 # print(df.isnull().count())
@@ -16,4 +16,4 @@ df = df[df['Tipo Centro Poblado'] == 'CABECERA MUNICIPAL']
 # Posteriormente la columna no es util
 df = df[['Nombre Municipio', 'Longitud', 'Latitud']]
 print(df.head())
-df.to_csv('../ExploreAntioquia/data/municipios_filtrados.csv', index=False)
+df.to_csv('/data/municipios_filtrados.csv', index=False)
