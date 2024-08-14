@@ -12,4 +12,5 @@ geometry = [Point(xy) for xy in zip(df['Longitud'], df['Latitud'])]
 # Crear un GeoDataFrame
 # No hay diferencias entre EPSG:4326 y WGS84
 gdf = gpd.GeoDataFrame(df, geometry=geometry, crs="EPSG:4326")
-gdf.to_file('../ExploreAntioquia/data/municipios_antioquia.geojson', driver='GeoJSON')
+gdf.to_file('../ExploreAntioquia/data/municipios_antioquia.geojson',
+            driver='GeoJSON')

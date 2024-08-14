@@ -22,7 +22,8 @@ def explorar_municipios(request):
 
 def municipio_detalle(request, id):
     # Ruta al archivo GeoJSON
-    geojson_path = os.path.join(settings.BASE_DIR, 'data', 'municipios_antioquia_actualizado.geojson')
+    geojson_path = os.path.join(
+        settings.BASE_DIR, 'data', 'municipios_antioquia_actualizado.geojson')
 
     # Cargar el GeoDataFrame desde el archivo GeoJSON
     gdf = gpd.read_file(geojson_path)
@@ -37,6 +38,6 @@ def municipio_detalle(request, id):
         'nombre': municipio['Nombre Municipio'],
         'descripcion': municipio['Descripcion']
     }
-    
+
     # Devolver los datos como JSON
     return JsonResponse(municipio_info)
