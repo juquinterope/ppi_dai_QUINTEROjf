@@ -5,6 +5,9 @@ ExploreAntioquia es una aplicación diseñada para brindar a los viajeros experi
 ## Uso
 Puedes copiar la apliacacion localmente usando docker [ExploreAntioquia](https://github.com/juquinterope/ppi_dai_QUINTEROjf/tree/main/ExploreAntioquia)
 
+## Scripts
+La carpeta scripts contiene codigos que se usaron para limpiar y recolectar los datos (csv, geojson etc...) usados en la app [scripts](https://github.com/juquinterope/ppi_dai_QUINTEROjf/tree/main/scripts)
+
 ## Justificación
 En un mundo donde la industria del turismo está en constante crecimiento, los viajeros buscan cada vez más experiencias personalizadas y adaptadas a sus intereses específicos. Turismo Inteligente busca cubrir esta necesidad al proporcionar recomendaciones basadas en datos, permitiendo a los usuarios explorar destinos de una manera más significativa y satisfactoria.
 
