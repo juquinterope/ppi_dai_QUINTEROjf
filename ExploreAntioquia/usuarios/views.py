@@ -9,12 +9,21 @@ def home(request):
 
 
 def register(request):
+    # Si el formulario de login es enviado 'POST'
     if request.method == 'POST':
+        # Se registra el formulario en el modelo de django,
+        # el login viene predefinido
         form = UserRegisterForm(request.POST)
+        # Si los datos ingresados son validos
         if form.is_valid():
+            # Se guarda el objeto (sin escribirlo aun en la base de datos)
             user = form.save(commit=False)
+            # Se limpia la contraseña
             user.set_password(form.cleaned_data['password'])
+            # Se escribe el usuario en la base de datos
             user.save()
+
+            # Si el registro es correcto se carga una login request de django
             login(request, user)
             return redirect('home')
     else:
@@ -22,6 +31,7 @@ def register(request):
     return render(request, 'usuarios/register.html', {'form': form})
 
 
+# Luego de logout se redirecciona al inicio
 def logout_view(request):
     logout(request)
     return redirect('home')
