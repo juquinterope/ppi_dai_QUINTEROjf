@@ -12,7 +12,7 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 
 import os
 from pathlib import Path
-from decouple import config # type: ignore
+from decouple import config  # type: ignore
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -42,7 +42,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'usuarios',  # Configuracion de usuarios
     'exploracion',  # Localizacion/Exploracion municipios
-    'planeacion', # Planear itinerios
+    'planeacion',  # Planear itinerios
 ]
 
 MIDDLEWARE = [
