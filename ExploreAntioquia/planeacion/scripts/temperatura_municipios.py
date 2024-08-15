@@ -1,15 +1,15 @@
+import base64
+from io import BytesIO
+from decouple import config  # type: ignore
+import contextily as ctx  # type: ignore
+from mpl_toolkits.axes_grid1 import make_axes_locatable
+from matplotlib.colors import Normalize
+import matplotlib.pyplot as plt
 import geopandas as gpd  # type: ignore
 import requests
 import matplotlib
 # Usar backend 'Agg' para evitar GUI warnings
 matplotlib.use('Agg')
-import matplotlib.pyplot as plt
-from matplotlib.colors import Normalize
-from mpl_toolkits.axes_grid1 import make_axes_locatable
-import contextily as ctx  # type: ignore
-from decouple import config  # type: ignore
-from io import BytesIO
-import base64
 
 
 def municipios_mas_cercanos(nombre_municipio, municipios, num_cercanos=5):
@@ -53,7 +53,8 @@ def obtener_datos_climaticos(lat, lon):
 
 def mapa_calor(gdf):
     # Crear la figura y los ejes
-    fig, ax = plt.subplots(1, 2, figsize=(16, 8), gridspec_kw={'width_ratios': [4, 1]})
+    fig, ax = plt.subplots(1, 2, figsize=(
+        16, 8), gridspec_kw={'width_ratios': [4, 1]})
 
     # Graficar el mapa base con el mapa de calor en el primer eje
     gdf.plot(ax=ax[0], alpha=0.6, edgecolor='k', cmap='coolwarm', legend=False,
@@ -74,7 +75,8 @@ def mapa_calor(gdf):
     # Usar ScalarMappable para la barra de color
     sm = plt.cm.ScalarMappable(cmap='coolwarm', norm=Normalize(
         vmin=gdf['temperatura'].min(), vmax=gdf['temperatura'].max()))
-    sm.set_array(gdf['temperatura'])  # Pasar los datos de temperatura al ScalarMappable
+    # Pasar los datos de temperatura al ScalarMappable
+    sm.set_array(gdf['temperatura'])
 
     # Añadir la barra de color
     cbar = fig.colorbar(sm, cax=cax)
@@ -84,7 +86,8 @@ def mapa_calor(gdf):
 
     # Crear la tabla en el segundo eje
     table_data = list(zip(gdf['Nombre Municipio'], gdf['temperatura']))
-    table = ax[1].table(cellText=table_data, colLabels=['Municipio', 'Temperatura'], loc='center')
+    table = ax[1].table(cellText=table_data, colLabels=[
+                        'Municipio', 'Temperatura'], loc='center')
     table.auto_set_font_size(False)
     table.set_fontsize(10)
     table.scale(1, 1.5)  # Ajustar tamaño de la tabla
