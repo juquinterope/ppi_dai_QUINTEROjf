@@ -1,4 +1,4 @@
-import geopandas as gpd # type: ignore
+import geopandas as gpd  # type: ignore
 
 
 def municipios_mas_cercanos(nombre_municipio, municipios, num_cercanos=5):
@@ -12,7 +12,7 @@ def municipios_mas_cercanos(nombre_municipio, municipios, num_cercanos=5):
     -----------
     nombre_municipio : str
         El nombre del municipio de referencia para encontrar los municipios más cercanos.
-    
+
     municipios : GeoDataFrame
         Un GeoDataFrame que contiene la información de los municipios, incluyendo columnas de geometría y nombre del municipio.
         Debe tener una columna llamada 'Nombre Municipio' con el nombre de los municipios y columnas 'Latitud' y 'Longitud' con sus coordenadas.
@@ -50,20 +50,23 @@ def municipios_mas_cercanos(nombre_municipio, municipios, num_cercanos=5):
     - geopandas
     """
     # Seleccionar el municipio de referencia
-    municipio_ref = municipios[municipios['Nombre Municipio'] == nombre_municipio]
-    
+    municipio_ref = municipios[municipios['Nombre Municipio']
+                               == nombre_municipio]
+
     if municipio_ref.empty:
-        print(f"El municipio {nombre_municipio} no fue encontrado en el archivo GeoJSON.")
+        print(
+            f"El municipio {nombre_municipio} no fue encontrado en el archivo GeoJSON.")
         return None
-    
+
     # Obtener la geometría del municipio de referencia
     geom_ref = municipio_ref.geometry.iloc[0]
-    
+
     # Calcular la distancia de todos los municipios al municipio de referencia
     municipios['distancia'] = municipios.geometry.distance(geom_ref)
-    
+
     # Ordenar los municipios por distancia y seleccionar los más cercanos (excluyendo el propio municipio)
-    municipios_cercanos = municipios[municipios['Nombre Municipio'] != nombre_municipio].sort_values('distancia').head(num_cercanos)
-    
+    municipios_cercanos = municipios[municipios['Nombre Municipio']
+                                     != nombre_municipio].sort_values('distancia').head(num_cercanos)
+
     # Devuelve la distancia en metros
     return municipios_cercanos[['Nombre Municipio', 'distancia', 'Latitud', 'Longitud']]

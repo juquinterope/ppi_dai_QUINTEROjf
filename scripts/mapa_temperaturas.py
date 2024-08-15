@@ -1,7 +1,7 @@
 import matplotlib.pyplot as plt
 from matplotlib.colors import Normalize
 from mpl_toolkits.axes_grid1 import make_axes_locatable
-import contextily as ctx # type: ignore
+import contextily as ctx  # type: ignore
 
 
 def mapa_calor(gdf):
@@ -34,7 +34,7 @@ def mapa_calor(gdf):
     >>> gdf = gpd.GeoDataFrame(df, geometry='geometry', crs='EPSG:4326')
     >>>
     >>> mapa_calor(gdf)
-    
+
     Notas:
     ------
     - La columna 'temperatura' debe contener los valores numéricos que se usarán para el mapa de calor.
@@ -55,17 +55,19 @@ def mapa_calor(gdf):
 
     # Graficar el mapa base
     gdf.plot(ax=ax, alpha=0.6, edgecolor='k', cmap='coolwarm', legend=False,
-                    markersize=100, column='temperatura', norm=Normalize(vmin=gdf['temperatura'].min(), vmax=gdf['temperatura'].max()))
+             markersize=100, column='temperatura', norm=Normalize(vmin=gdf['temperatura'].min(), vmax=gdf['temperatura'].max()))
 
     # Añadir el mapa base
-    ctx.add_basemap(ax, crs=gdf.crs.to_string(), source=ctx.providers.CartoDB.Positron)
+    ctx.add_basemap(ax, crs=gdf.crs.to_string(),
+                    source=ctx.providers.CartoDB.Positron)
 
     # Ajustar la leyenda del mapa de calor
     divider = make_axes_locatable(ax)
     cax = divider.append_axes("right", size="5%", pad=0.1)
 
     # Usar ScalarMappable solo una vez para la barra de color
-    sm = plt.cm.ScalarMappable(cmap='coolwarm', norm=Normalize(vmin=gdf['temperatura'].min(), vmax=gdf['temperatura'].max()))
+    sm = plt.cm.ScalarMappable(cmap='coolwarm', norm=Normalize(
+        vmin=gdf['temperatura'].min(), vmax=gdf['temperatura'].max()))
     sm.set_array([])  # No necesita datos, solo el cmap y norm
 
     # Añadir la barra de color

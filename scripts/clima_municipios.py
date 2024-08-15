@@ -7,9 +7,10 @@ import pandas as pd
 geojson_file = "../ExploreAntioquia/data/municipios_antioquia_actualizado.geojson"
 municipios = gpd.read_file(geojson_file)
 
+
 def obtener_datos_climaticos(lat, lon):
     api_key = "tu_api"
-    
+
     base_url = f"https://api.openweathermap.org/data/3.0/onecall?lat={lat}&lon={lon}&exclude=minutely,hourly,daily,alerts&appid={api_key}&units=metric&lang=es"
     response = requests.get(base_url)
     if response.status_code == 200:
@@ -41,6 +42,8 @@ if not municipio.empty:
         df_clima = pd.DataFrame([datos_climaticos])
         print(df_clima.head())
     else:
-        print(f"No se pudo obtener la información climática para {nombre_municipio}.")
+        print(
+            f"No se pudo obtener la información climática para {nombre_municipio}.")
 else:
-    print(f"El municipio {nombre_municipio} no fue encontrado en el archivo GeoJSON.")
+    print(
+        f"El municipio {nombre_municipio} no fue encontrado en el archivo GeoJSON.")
