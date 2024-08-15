@@ -1,9 +1,16 @@
 // Inicializar el mapa
 var map = L.map('map').setView([6.251, -75.567], 8);
 
+var bounds = [
+    [5.0, -78.0], // Suroeste (aproximado)
+    [9.0, -73.5]  // Noreste (aproximado)
+];
+map.setMaxBounds(bounds);
+
 // Añadir capa base
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     maxZoom: 18,
+    attribution: '© OpenStreetMap contributors'
 }).addTo(map);
 
 // Datos de los municipios en formato GeoJSON,

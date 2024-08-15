@@ -6,3 +6,13 @@
 
 # Entorno local
 *.venv-django
+
+# Ignorar la carpeta estática de desarrollo y el cache
+__pycache__
+*.pyc
+*.pyo
+*.pyd
+*.db
+*.sqlite3
+static/
+media/

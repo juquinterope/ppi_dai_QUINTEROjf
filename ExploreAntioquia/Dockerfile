@@ -17,5 +17,9 @@ RUN apt-get update && \
 # Instala las dependencias de Python
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Comando para ejecutar la aplicación
-CMD ["gunicorn", "--bind", "0.0.0.0:8000", "ExploreAntioquia.wsgi:application"]
+# Copia el script de entrada y dale permisos de ejecución
+COPY entrypoint.sh /entrypoint.sh
+RUN chmod +x /entrypoint.sh
+
+# Comando para ejecutar el script de entrada
+ENTRYPOINT ["/entrypoint.sh"]
