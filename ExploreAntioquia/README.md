@@ -1,6 +1,6 @@
 # ExploreAntioquia
 
-ExploreAntioquia es una aplicación sencilla de Django que visualiza un mapa interactivo del departamento de Antioquia, marcando los municipios dentro de él. 
+ExploreAntioquia es una aplicación sencilla de Django. 
 Este repositorio proporciona instrucciones sobre cómo ejecutar la aplicación localmente usando Docker.
 
 ## Requisitos Previos
