@@ -4,7 +4,7 @@
 <head>
     <title>Analizar Municipios de Antioquia</title>
     <!-- Bootstrap CSS -->
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">   
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
     <!-- Navbar -->
@@ -38,29 +38,44 @@
             </ul>
         </div>
     </nav>
-    <div>
+
+    <div class="container mt-4">
         {% if user.is_authenticated %}
-            <div>
-                <form method="POST">
-                    {% csrf_token %}
-                    <label for="municipio">Selecciona un Municipio:</label>
-                    <select id="municipio" name="municipio">
-                        <option value="-" selected>-</option>  <!-- Opción por defecto -->
-                        {% for municipio in municipios %}
-                            <option value="{{ municipio }}">{{ municipio }}</option>
-                        {% endfor %}
-                    </select>
-                    <button type="submit">Planear</button>
-                </form>
+            <div class="card">
+                <div class="card-header">
+                    Planear Viaje
+                </div>
+                <div class="card-body">
+                    <form method="POST">
+                        {% csrf_token %}
+                        <div class="form-group">
+                            <label for="municipio">Selecciona un Municipio:</label>
+                            <select id="municipio" name="municipio" class="form-control">
+                                <option value="-" selected>-</option>  <!-- Opción por defecto -->
+                                {% for municipio in municipios %}
+                                    <option value="{{ municipio }}">{{ municipio }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Planear</button>
+                    </form>
+                </div>
             </div>
             {% if mapa_calor_base64 %}
-                <div>
-                    <img src="data:image/png;base64,{{ mapa_calor_base64 }}" alt="Mapa de Temperaturas">
+                <div class="mt-4">
+                    <img src="data:image/png;base64,{{ mapa_calor_base64 }}" alt="Mapa de Temperaturas" class="img-fluid rounded">
                 </div>
             {% endif %}
         {% else %}
-            <p>Logueate para desbloquear la funcion</p>
+            <div class="alert alert-warning" role="alert">
+                Por favor, inicie sesión para desbloquear esta función.
+            </div>
         {% endif %}
     </div>
+
+    <!-- Bootstrap JS (Opcional) -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>
