@@ -40,7 +40,6 @@ def municipios_mas_cercanos(nombre_municipio, municipios, num_cercanos=5):
 
 
 def obtener_datos_climaticos(lat, lon):
-    # api_key = "606c1db2da4167cbdd177219d449b50c"
     api_key = config('WEATHER_API')
 
     base_url = f"https://api.openweathermap.org/data/3.0/onecall?lat={lat}&lon={lon}&exclude=minutely,hourly,daily,alerts&appid={api_key}&units=metric&lang=es"
