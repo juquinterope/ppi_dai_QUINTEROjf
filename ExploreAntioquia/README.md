@@ -13,10 +13,10 @@ Antes de comenzar, asegúrate de tener instalados en tu máquina local:
 
 1. **Descargar la Imagen Docker desde Docker Hub**
 
-   Primero, descarga la imagen Docker desde Docker Hub. Esta imagen contiene la aplicación preconstruida:
+   Primero, descarga la imagen Docker desde Docker Hub dentro de un directorio. Esta imagen contiene la aplicación preconstruida:
 
    ```bash
-   docker pull juanqu/explore-antioquia:1.1
+   docker pull juanqu/explore-antioquia:1.2
    ```
 2. **Configurar el Archivo .env**
 
@@ -39,7 +39,7 @@ Antes de comenzar, asegúrate de tener instalados en tu máquina local:
 4. **Ejecutar el contenedor**
 
    ```bash
-   docker run -p 8000:8000 --env-file .env juanqu/explore-antioquia:1.1
+   docker run -p 8000:8000 --env-file .env juanqu/explore-antioquia:1.2
    ```
 
    Asi se puede correr la imagen cargando tus crendenciales.
