@@ -31,9 +31,8 @@ def municipios_mas_cercanos(nombre_municipio, municipios, num_cercanos=5):
     # Calcular la distancia de todos los municipios al municipio de referencia
     municipios['distancia'] = municipios.geometry.distance(geom_ref)
 
-    # Ordenar los municipios por distancia y seleccionar los más cercanos (excluyendo el propio municipio)
-    municipios_cercanos = municipios[municipios['Nombre Municipio']
-                                     != nombre_municipio].sort_values('distancia').head(num_cercanos)
+    # Ordenar los municipios por distancia y seleccionar los más cercanos
+    municipios_cercanos = municipios.sort_values('distancia').head(num_cercanos)
 
     # Devuelve la distancia en metros
     return municipios_cercanos[['Nombre Municipio', 'distancia', 'Latitud', 'Longitud']]
