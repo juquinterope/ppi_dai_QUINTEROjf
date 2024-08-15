@@ -12,3 +12,12 @@ El dataframe original con informacion sobre los municipios se obtuvo de [Geoport
 
 ### Datos en ExploreAntioquia
 Luego de pasar por todos los scripts, ese geojson final son los datos cargados por al app.
+
+### Recolectar clima en tiempo real
+<clima_municipios.py> Implementa el llamado a la api de [OpenWeatherMap](https://openweathermap.org/api) para recolectar el clima en tiempo real de un municipio dado.
+
+### Buscar municipios cercanos
+<municipios_cercanos.py> Busca los municipios mas cercanos al municipio de interes, teniendo en cuenta el geodataframe sobre los [municipios de Antioquia](https://github.com/juquinterope/ppi_dai_QUINTEROjf/blob/main/ExploreAntioquia/data/municipios_antioquia_actualizado.geojson) de la app.
+
+### Mapa de temperaturas
+<mapa_temperaturas.py> Sobre un mapa base de [contextily](https://contextily.readthedocs.io/en/latest/) aplica un mapa de calor sobre temperaturas de los puntos geograficos dados.
