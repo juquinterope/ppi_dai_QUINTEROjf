@@ -86,7 +86,7 @@ def mapa_calor(gdf):
 
     # Crear la tabla en el segundo eje
     table_data = list(zip(gdf['Nombre Municipio'], gdf['temperatura']))
-    table = ax[1].table(cellText=table_data, colLabels=['Municipio', 'Temperatura'], loc='center', 
+    table = ax[1].table(cellText=table_data, colLabels=['Municipio', 'Temperatura'], loc='center',
                         colWidths=[0.9, 0.4])
     table.auto_set_font_size(False)
     table.set_fontsize(10)
