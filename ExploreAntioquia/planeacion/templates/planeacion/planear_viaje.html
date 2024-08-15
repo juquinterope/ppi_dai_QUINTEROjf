@@ -40,9 +40,26 @@
     </nav>
     <div>
         {% if user.is_authenticated %}
-        <p>Usuario registrado</p>
+            <div>
+                <form method="POST">
+                    {% csrf_token %}
+                    <label for="municipio">Selecciona un Municipio:</label>
+                    <select id="municipio" name="municipio">
+                        <option value="-" selected>-</option>  <!-- Opción por defecto -->
+                        {% for municipio in municipios %}
+                            <option value="{{ municipio }}">{{ municipio }}</option>
+                        {% endfor %}
+                    </select>
+                    <button type="submit">Planear</button>
+                </form>
+            </div>
+            {% if mapa_calor_base64 %}
+                <div>
+                    <img src="data:image/png;base64,{{ mapa_calor_base64 }}" alt="Mapa de Temperaturas">
+                </div>
+            {% endif %}
         {% else %}
-        <p>Usuario NO registrado</p>
+            <p>Logueate para desbloquear la funcion</p>
         {% endif %}
     </div>
 </body>

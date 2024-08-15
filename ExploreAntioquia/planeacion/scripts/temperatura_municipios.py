@@ -1,18 +1,15 @@
 import geopandas as gpd  # type: ignore
 import requests
+import matplotlib
+# Usar backend 'Agg' para evitar GUI warnings
+matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 from matplotlib.colors import Normalize
 from mpl_toolkits.axes_grid1 import make_axes_locatable
 import contextily as ctx  # type: ignore
 from decouple import config  # type: ignore
-
-
-# Leer el archivo GeoJSON
-geojson_file = "../../data/municipios_antioquia_actualizado.geojson"
-municipios = gpd.read_file(geojson_file)
-
-# Reproyectar a un sistema de coordenadas proyectado (UTM, por ejemplo EPSG:3116 para Colombia)
-municipios = municipios.to_crs(epsg=3116)
+from io import BytesIO
+import base64
 
 
 def municipios_mas_cercanos(nombre_municipio, municipios, num_cercanos=5):
@@ -54,60 +51,54 @@ def obtener_datos_climaticos(lat, lon):
         return None
 
 
-# Ejemplo de uso
-# Cambia esto por el nombre del municipio que deseas consultar
-nombre_municipio = "ANZÁ"
-municipios_cercanos = municipios_mas_cercanos(nombre_municipio, municipios)
-municipios_cercanos['temperatura'] = municipios_cercanos.apply(
-    lambda x: obtener_datos_climaticos(
-        x['Latitud'], x['Longitud'])['temperatura'],
-    axis=1)
-
-if municipios_cercanos is not None:
-    print(municipios_cercanos)
-
-gdf = gpd.GeoDataFrame(
-    municipios_cercanos,
-    geometry=gpd.points_from_xy(
-        municipios_cercanos.Longitud, municipios_cercanos.Latitud)
-)
-
-# Asignar el CRS inicial (WGS 84)
-# EPSG:4326 es para coordenadas geográficas (lat/lon)
-gdf = gdf.set_crs(epsg=4326)
-
-# Reproyectar a un CRS métrico adecuado
-gdf = gdf.to_crs(epsg=3116)  # EPSG:3116 es un CRS métrico para Colombia
-
-
 def mapa_calor(gdf):
-    # Crear el mapa
     # Crear la figura y los ejes
-    fig, ax = plt.subplots(1, 1, figsize=(12, 8))
+    fig, ax = plt.subplots(1, 2, figsize=(16, 8), gridspec_kw={'width_ratios': [4, 1]})
 
-    # Graficar el mapa base
-    gdf.plot(ax=ax, alpha=0.6, edgecolor='k', cmap='coolwarm', legend=False,
+    # Graficar el mapa base con el mapa de calor en el primer eje
+    gdf.plot(ax=ax[0], alpha=0.6, edgecolor='k', cmap='coolwarm', legend=False,
              markersize=100, column='temperatura', norm=Normalize(vmin=gdf['temperatura'].min(), vmax=gdf['temperatura'].max()))
 
     # Añadir el mapa base
-    ctx.add_basemap(ax, crs=gdf.crs.to_string(),
+    ctx.add_basemap(ax[0], crs=gdf.crs.to_string(),
                     source=ctx.providers.CartoDB.Positron)
 
+    # Eliminar las etiquetas de los ejes (x, y)
+    ax[0].set_xticks([])
+    ax[0].set_yticks([])
+
     # Ajustar la leyenda del mapa de calor
-    divider = make_axes_locatable(ax)
+    divider = make_axes_locatable(ax[0])
     cax = divider.append_axes("right", size="5%", pad=0.1)
 
     # Usar ScalarMappable para la barra de color
     sm = plt.cm.ScalarMappable(cmap='coolwarm', norm=Normalize(
         vmin=gdf['temperatura'].min(), vmax=gdf['temperatura'].max()))
-    sm.set_array([])  # No necesita datos, solo el cmap y norm
+    sm.set_array(gdf['temperatura'])  # Pasar los datos de temperatura al ScalarMappable
 
     # Añadir la barra de color
     cbar = fig.colorbar(sm, cax=cax)
     cbar.set_label('Temperatura')
 
-    ax.set_title('Mapa de Temperaturas en Municipios')
-    plt.show()
+    ax[0].set_title('Mapa de Temperaturas en Municipios')
 
+    # Crear la tabla en el segundo eje
+    table_data = list(zip(gdf['Nombre Municipio'], gdf['temperatura']))
+    table = ax[1].table(cellText=table_data, colLabels=['Municipio', 'Temperatura'], loc='center')
+    table.auto_set_font_size(False)
+    table.set_fontsize(10)
+    table.scale(1, 1.5)  # Ajustar tamaño de la tabla
 
-mapa_calor(gdf)
+    # Quitar los ejes del gráfico de la tabla
+    ax[1].axis('off')
+
+    # Guardar la imagen en un objeto de BytesIO
+    buffer = BytesIO()
+    fig.savefig(buffer, format='png', bbox_inches='tight')
+    plt.close(fig)  # Cerrar la figura para liberar memoria
+
+    # Convertir la imagen a base64
+    buffer.seek(0)
+    image_base64 = base64.b64encode(buffer.read()).decode('utf-8')
+
+    return image_base64
