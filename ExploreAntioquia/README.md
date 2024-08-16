@@ -36,6 +36,8 @@ Antes de comenzar, asegúrate de tener instalados en tu máquina local:
    
    DB_PORT=5432
 
+   WEATHER_API=openweathermap_api
+
 4. **Ejecutar el contenedor**
 
    ```bash
