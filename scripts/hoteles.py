@@ -57,8 +57,8 @@ def reviews(id):
 
     Returns:
         list: Una lista que contiene:
-            - Un array de NumPy con los ratings de las reseñas.
-            - Un array de NumPy con el número de votos útiles de las reseñas.
+            - Un array de NumPy en la posicion 0 con los ratings de las reseñas.
+            - Un array de NumPy en la posicion 1 con el número de votos útiles de las reseñas.
             - Una lista de diccionarios, cada uno representando una reseña sin el rating, que incluye:
                 - 'text': El texto de la reseña.
                 - 'date': La fecha del viaje.
