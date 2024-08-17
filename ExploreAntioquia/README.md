@@ -17,12 +17,12 @@ Antes de comenzar, asegúrate de tener instalados en tu máquina local:
    Primero, descarga la imagen Docker desde Docker Hub dentro de un directorio. Esta imagen contiene la aplicación preconstruida:
 
    ```bash
-   docker pull juanqu/explore-antioquia:1.2
+   docker pull juanqu/explore-antioquia:1.3
    ```
 
    Crear un contenedor temporal para acceder a los archivos:
    ```bash
-   docker create --name temp-container explore-antioquia:1.2
+   docker create --name temp-container explore-antioquia:1.3
    ```
    Copiar el archivo entrypoint.sh del contenedor temporal a la máquina local:
    ```bash
