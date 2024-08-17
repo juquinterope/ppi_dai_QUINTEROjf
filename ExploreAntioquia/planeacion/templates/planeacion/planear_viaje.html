@@ -66,6 +66,22 @@
                     <img src="data:image/png;base64,{{ mapa_calor_base64 }}" alt="Mapa de Temperaturas" class="img-fluid rounded">
                 </div>
             {% endif %}
+            {% if restaurantes %}
+                <div class="container mt-5">
+                    <h2 class="mb-4">Restaurantes Recomendados en {{ nombre_municipio }}</h2>
+                    <div class="list-group">
+                        <!-- Iterar sobre la lista de restaurantes -->
+                        
+                    </div>
+                </div>
+                {% for restaurante in restaurantes %}
+                    <div class="list-group-item list-group-item-action">
+                        <h5 class="mb-1">{{ restaurante.nombre }}</h5>
+                        <p class="mb-1">{{ restaurante.direccion }}</p>
+                        <small>Rating: <span class="badge badge-primary">{{ restaurante.rating }}</span></small>
+                    </div>
+                {% endfor %}
+            {% endif %}
         {% else %}
             <div class="alert alert-warning" role="alert">
                 Por favor, inicie sesión para desbloquear esta función.

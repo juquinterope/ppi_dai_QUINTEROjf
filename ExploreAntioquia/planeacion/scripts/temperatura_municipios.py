@@ -82,7 +82,7 @@ def mapa_calor(gdf):
     cbar = fig.colorbar(sm, cax=cax)
     cbar.set_label('Temperatura')
 
-    ax[0].set_title('Mapa de Temperaturas en Municipios')
+    ax[0].set_title('Mapa de Temperaturas en Municipios cercanos')
 
     # Crear la tabla en el segundo eje
     table_data = list(zip(gdf['Nombre Municipio'], gdf['temperatura']))
