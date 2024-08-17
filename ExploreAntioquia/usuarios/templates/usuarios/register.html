@@ -4,11 +4,37 @@
 <div class="row justify-content-center">
     <div class="col-md-6">
         <h2>Registro de Usuario</h2>
-        <form method="post">
-            {% csrf_token %}
-            {{ form.as_p }}
-            <button type="submit" class="btn btn-primary">Registrar</button>
-        </form>
+        
+        <!-- Checkbox para aceptar la política de privacidad -->
+        <div class="form-group">
+            <input type="checkbox" id="acceptPolicy" onchange="toggleForm()" />
+            <label for="acceptPolicy">
+                Acepto la <a href="https://www.freeprivacypolicy.com/live/ee3e6d7e-f091-46a0-a355-0e18aca16e18" target="_blank">Política de Privacidad</a>
+            </label>
+        </div>
+
+        <!-- Formulario de registro (oculto por defecto) -->
+        <div id="registrationForm" style="display: none;">
+            <form method="post">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit" class="btn btn-primary">Registrar</button>
+            </form>
+        </div>
     </div>
 </div>
+
+<script>
+    function toggleForm() {
+        var checkbox = document.getElementById("acceptPolicy");
+        var form = document.getElementById("registrationForm");
+
+        // Mostrar el formulario si se acepta la política de privacidad
+        if (checkbox.checked) {
+            form.style.display = "block";
+        } else {
+            form.style.display = "none";
+        }
+    }
+</script>
 {% endblock %}
