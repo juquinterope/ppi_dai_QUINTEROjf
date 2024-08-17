@@ -1,6 +1,7 @@
 import requests
 from typing import List, Dict, Any
 
+
 def search_places(api_key: str, latitude: float, longitude: float, place_type: str, radius: int = 3000) -> List[Dict[str, Any]]:
     """
     Busca lugares cercanos a las coordenadas especificadas usando la API de Places de Google.
@@ -17,7 +18,7 @@ def search_places(api_key: str, latitude: float, longitude: float, place_type: s
     """
     # Endpoint de la API de Places
     url = 'https://maps.googleapis.com/maps/api/place/nearbysearch/json'
-    
+
     # Parámetros de la solicitud
     params = {
         'location': f'{latitude},{longitude}',
@@ -27,8 +28,8 @@ def search_places(api_key: str, latitude: float, longitude: float, place_type: s
         'locationRestriction': {
             "circle": {
                 "center": {
-                "latitude": latitude,
-                "longitude": longitude
+                    "latitude": latitude,
+                    "longitude": longitude
                 },
                 "radius": radius
             }
@@ -41,14 +42,16 @@ def search_places(api_key: str, latitude: float, longitude: float, place_type: s
     # Verifica el estado de la solicitud
     if response.status_code == 200:
         results = response.json().get('results', [])
-        
+
         # Filtrar y ordenar por rating
-        sorted_results = sorted(results, key=lambda x: x.get('rating', 0), reverse=True)
-        
+        sorted_results = sorted(
+            results, key=lambda x: x.get('rating', 0), reverse=True)
+
         return sorted_results
     else:
         print(f"Error en la solicitud: {response.status_code}")
         return []
+
 
 # Ejemplo de uso
 if __name__ == "__main__":
@@ -59,7 +62,7 @@ if __name__ == "__main__":
     PLACE_TYPE = 'restaurant'
 
     places = search_places(API_KEY, LATITUDE, LONGITUDE, PLACE_TYPE)
-    
+
     for place in places:
         name = place.get('name', 'No disponible')
         address = place.get('vicinity', 'No disponible')
@@ -68,4 +71,3 @@ if __name__ == "__main__":
         print(f"Dirección: {address}")
         print(f"Rating: {rating}")
         print("------")
-

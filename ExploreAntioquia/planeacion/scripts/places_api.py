@@ -2,6 +2,7 @@ import requests
 from typing import List, Dict, Any
 from decouple import config  # type: ignore
 
+
 def search_places(latitude: float, longitude: float, place_type: str, radius: int = 3000) -> List[Dict[str, Any]]:
     """
     Busca lugares cercanos a las coordenadas especificadas usando la API de Places de Google.
@@ -18,7 +19,7 @@ def search_places(latitude: float, longitude: float, place_type: str, radius: in
     """
     # Endpoint de la API de Places
     url = 'https://maps.googleapis.com/maps/api/place/nearbysearch/json'
-    
+
     # Parámetros de la solicitud
     params = {
         'location': f'{latitude},{longitude}',
@@ -28,8 +29,8 @@ def search_places(latitude: float, longitude: float, place_type: str, radius: in
         'locationRestriction': {
             "circle": {
                 "center": {
-                "latitude": latitude,
-                "longitude": longitude
+                    "latitude": latitude,
+                    "longitude": longitude
                 },
                 "radius": radius
             }
@@ -42,15 +43,17 @@ def search_places(latitude: float, longitude: float, place_type: str, radius: in
     # Verifica el estado de la solicitud
     if response.status_code == 200:
         results = response.json().get('results', [])
-        
+
         # Filtrar y ordenar por rating
-        sorted_results = sorted(results, key=lambda x: x.get('rating', 0), reverse=True)
+        sorted_results = sorted(
+            results, key=lambda x: x.get('rating', 0), reverse=True)
         results = []
         for place in sorted_results:
             name = place.get('name', 'No disponible')
             address = place.get('vicinity', 'No disponible')
             rating = place.get('rating', 'No disponible')
-            results.append({'nombre':name, 'direccion':address, 'rating':rating})
+            results.append(
+                {'nombre': name, 'direccion': address, 'rating': rating})
         return results
     else:
         # print(f"Error en la solicitud: {response.status_code}")

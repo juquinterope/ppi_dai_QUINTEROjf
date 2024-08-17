@@ -30,14 +30,15 @@ def planear_viaje(request):
             return render(request, 'planeacion/planear_viaje.html', {'municipios': municipios,
                                                                      'mapa_calor_base64': mapa_calor_base64,
                                                                      'restaurantes': restaurantes,
-                                                                     'nombre_municipio':nombre_municipio})
+                                                                     'nombre_municipio': nombre_municipio})
 
         # Reproyectar a un sistema de coordenadas proyectado (UTM, por ejemplo EPSG:3116 para Colombia)
         gdf = gdf.to_crs(epsg=3116)
         # La funcion municipios_mas_cercanos devuelve un dataframe
         municipios_cercanos = municipios_mas_cercanos(nombre_municipio, gdf)
         # Capturar latitud y longitud de municipio de interes
-        lat, lon = municipios_cercanos.loc[municipios_cercanos['Nombre Municipio'] == nombre_municipio].iloc[0][['Latitud', 'Longitud']]
+        lat, lon = municipios_cercanos.loc[municipios_cercanos['Nombre Municipio']
+                                           == nombre_municipio].iloc[0][['Latitud', 'Longitud']]
         # print(lat, lon)
         # Buscar restaurantes en el municipio
         restaurantes = search_places(lat, lon, place_type='restaurant')
@@ -66,4 +67,4 @@ def planear_viaje(request):
     return render(request, 'planeacion/planear_viaje.html', {'municipios': municipios,
                                                              'mapa_calor_base64': mapa_calor_base64,
                                                              'restaurantes': restaurantes,
-                                                             'nombre_municipio':nombre_municipio})
+                                                             'nombre_municipio': nombre_municipio})
