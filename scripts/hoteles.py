@@ -42,11 +42,6 @@ def obtener_hoteles_cercanos(latitud, longitud, municipio):
         print("Error al consultar la API:", response.status_code)
         return False
 
-# Ejemplo de uso
-# latitud = 6.2442   # Latitud de Medellín, Antioquia
-# longitud = -75.5812  # Longitud de Medellín, Antioquia
-# hoteles, reviews = obtener_hoteles_cercanos(latitud, longitud, 'MEDELLIN')
-# print(hoteles, '\n\n', reviews)
 
 def reviews(id):
     """
@@ -113,8 +108,21 @@ def reviews(id):
         raise ValueError(f'Error en la solicitud: {response_2.status_code}')
     
     # Retorna una lista con el array de ratings, el array de votos y luego las reseñas
-    return [ratings, votes] + reviews
+    return {'ratings': ratings, 'votes': votes, 'reviews': reviews}
 
 
-opiniones = reviews(8318317)
+# opiniones = reviews(8318317)
+# print(opiniones)
+
+
+# Ejemplo de uso
+latitud = 6.2442   # Latitud de Medellín, Antioquia
+longitud = -75.5812  # Longitud de Medellín, Antioquia
+hoteles = obtener_hoteles_cercanos(latitud, longitud, 'MEDELLIN')
+print(hoteles)
+opiniones = []
+for hotel in hoteles[:2]:
+    review = reviews(hotel['id'])
+    opiniones.append(review)
+
 print(opiniones)

@@ -55,11 +55,11 @@ def search_places(api_key: str, latitude: float, longitude: float, place_type: s
 
 # Ejemplo de uso
 if __name__ == "__main__":
-    API_KEY = 'api_key'
+    API_KEY = 'AIzaSyCg7ipYMSiRjpqYN1A43W2Qm1ExSu3OQ4s'
     LATITUDE = 6.2518
     LONGITUDE = -75.5636
-    # Cambiar a 'lodging' para hoteles
-    PLACE_TYPE = 'restaurant'
+    # Cambiar a 'lodging' para hoteles/alojamientos
+    PLACE_TYPE = 'lodging'
 
     places = search_places(API_KEY, LATITUDE, LONGITUDE, PLACE_TYPE)
 
@@ -71,3 +71,4 @@ if __name__ == "__main__":
         print(f"Dirección: {address}")
         print(f"Rating: {rating}")
         print("------")
+
