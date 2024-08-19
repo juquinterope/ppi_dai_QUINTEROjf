@@ -25,10 +25,10 @@ def ver_turismo(request):
         # Manejar el caso donde no se seleccionó un municipio válido
         if nombre_municipio == '-':
             return render(request, 'turismo/mapa_turismo.html', {'PLACES_API': places_api,
-                                                             'pois': False,
-                                                             'center': False,
-                                                             'municipios': municipios,
-                                                             'formulario': True})
+                                                                'pois': False,
+                                                                'center': False,
+                                                                'municipios': municipios,
+                                                                'formulario': True})
         
         # Filtra el GeoDataFrame para encontrar la fila con el nombre del municipio
         municipio = gdf[gdf['Nombre Municipio'] == nombre_municipio]

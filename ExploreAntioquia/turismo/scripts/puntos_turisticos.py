@@ -1,33 +1,3 @@
-"""
-const CONFIGURATION = {
-        "capabilities": {"search":true,"distances":false,"directions":false,"contacts":true,"atmospheres":true,"thumbnails":true},
-        "pois": [
-          {"placeId": "ChIJd_9Ny_4oRI4RkpiSq1F-Wi4"},
-          {"placeId": "ChIJYaRayfgoRI4R6LikuF8OaPU"},
-          {"placeId": "ChIJR-sebFYoRI4RJf-8ytHw2o8"},
-          {"placeId": "ChIJ3xE-CqspRI4RPl8BKzTDilc"},
-          {"placeId": "ChIJBRdtjN-hRo4R-e5tUn5nECo"},
-          {"placeId": "ChIJG6gQ4lQoRI4RCkVHuyy42Oo"},
-          {"placeId": "ChIJXZ8euP4oRI4Ri2vW-qFyOiE"},
-          {"placeId": "ChIJP74bXlUoRI4Rxzl8RaA93VE"},
-          {"placeId": "ChIJubYqv1goRI4RtN2CJ9NRrbU"},
-          {"placeId": "ChIJT9gstlUoRI4RfH-4DPvOcU4"},
-          {"placeId": "ChIJnUNVoeYoRI4RrO85oGKjmdY"},
-          {"placeId": "ChIJRZTvSfooRI4RWEQz7QqMoLg"},
-          {"placeId": "ChIJR1x7jlUoRI4RLlueRikC84Q"},
-          {"placeId": "ChIJJzZ7MvkoRI4R73hm8KJMKqM"},
-          {"placeId": "ChIJxzSzH_goRI4R0_G15ZNDrKg"},
-          {"placeId": "ChIJ91zTG1YoRI4RIon8xB8n2bc"},
-          {"placeId": "ChIJS_yig_8oRI4RU2uezT7fgtc"},
-          {"placeId": "ChIJnQG2ivgoRI4RYvQdtkecOjs"},
-          {"placeId": "ChIJwUV1YqspRI4R-u7-D9VMqhQ"},
-          {"placeId": "ChIJTfWqgVgoRI4RtFOzYEq8VLA"}
-        ],
-        "mapRadius": 2000,
-        "mapOptions": {"center":{"lat":6.2476376,"lng":-75.56581530000001},"fullscreenControl":true,"mapTypeControl":true,"streetViewControl":false,"zoom":16,"zoomControl":true,"maxZoom":20,"mapId":""},
-        "mapsApiKey": "{{ 'PLACES_API' }}"
-      };
-"""
 import requests
 from typing import List, Dict, Any
 from decouple import config  # type: ignore
