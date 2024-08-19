@@ -22,6 +22,8 @@
     <script src="https://ajax.googleapis.com/ajax/libs/handlebars/4.7.7/handlebars.min.js"></script>
     <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet"/>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <style>
       html, body {
         height: 100%;
@@ -826,30 +828,9 @@
     <script>
       const CONFIGURATION = {
         "capabilities": {"search":true,"distances":false,"directions":false,"contacts":true,"atmospheres":true,"thumbnails":true},
-        "pois": [
-          {"placeId": "ChIJd_9Ny_4oRI4RkpiSq1F-Wi4"},
-          {"placeId": "ChIJYaRayfgoRI4R6LikuF8OaPU"},
-          {"placeId": "ChIJR-sebFYoRI4RJf-8ytHw2o8"},
-          {"placeId": "ChIJ3xE-CqspRI4RPl8BKzTDilc"},
-          {"placeId": "ChIJBRdtjN-hRo4R-e5tUn5nECo"},
-          {"placeId": "ChIJG6gQ4lQoRI4RCkVHuyy42Oo"},
-          {"placeId": "ChIJXZ8euP4oRI4Ri2vW-qFyOiE"},
-          {"placeId": "ChIJP74bXlUoRI4Rxzl8RaA93VE"},
-          {"placeId": "ChIJubYqv1goRI4RtN2CJ9NRrbU"},
-          {"placeId": "ChIJT9gstlUoRI4RfH-4DPvOcU4"},
-          {"placeId": "ChIJnUNVoeYoRI4RrO85oGKjmdY"},
-          {"placeId": "ChIJRZTvSfooRI4RWEQz7QqMoLg"},
-          {"placeId": "ChIJR1x7jlUoRI4RLlueRikC84Q"},
-          {"placeId": "ChIJJzZ7MvkoRI4R73hm8KJMKqM"},
-          {"placeId": "ChIJxzSzH_goRI4R0_G15ZNDrKg"},
-          {"placeId": "ChIJ91zTG1YoRI4RIon8xB8n2bc"},
-          {"placeId": "ChIJS_yig_8oRI4RU2uezT7fgtc"},
-          {"placeId": "ChIJnQG2ivgoRI4RYvQdtkecOjs"},
-          {"placeId": "ChIJwUV1YqspRI4R-u7-D9VMqhQ"},
-          {"placeId": "ChIJTfWqgVgoRI4RtFOzYEq8VLA"}
-        ],
+        "pois": {{ pois|safe }},
         "mapRadius": 2000,
-        "mapOptions": {"center":{"lat":6.2476376,"lng":-75.56581530000001},"fullscreenControl":true,"mapTypeControl":true,"streetViewControl":false,"zoom":16,"zoomControl":true,"maxZoom":20,"mapId":""},
+        "mapOptions": {"center":{{ center|safe }},"fullscreenControl":true,"mapTypeControl":true,"streetViewControl":false,"zoom":16,"zoomControl":true,"maxZoom":20,"mapId":""},
         "mapsApiKey": "{{ 'PLACES_API' }}"
       };
       function initMap() {
@@ -1007,6 +988,60 @@
     
   </head>
   <body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <a class="navbar-brand" href="{% url 'home' %}">
+          ExploreAntioquia
+      </a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav ml-auto">
+              <li class="nav-item">
+                  <a class="nav-link" href="{% url 'turismo' %}">Turismo</a>
+              </li>
+              <li class="nav-item">
+                  <a class="nav-link" href="{% url 'planear_viaje' %}">Planear Viaje</a>
+              </li>
+              <li class="nav-item">
+                  <a class="nav-link" href="{% url 'explorar_municipios' %}">Explorar Municipios</a>
+              </li>
+              {% if user.is_authenticated %}
+              <li class="nav-item">
+                  <a class="nav-link" href="{% url 'logout' %}">Logout</a>
+              </li>
+              {% else %}
+              <li class="nav-item">
+                  <a class="nav-link" href="{% url 'login' %}">Login</a>
+              </li>
+              <li class="nav-item">
+                  <a class="nav-link" href="{% url 'register' %}">Register</a>
+              </li>
+              {% endif %}
+          </ul>
+      </div>
+  </nav>
+  {% if formulario %}
+  <div class="card">
+    <div class="card-body">
+        <form method="POST">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="municipio">Selecciona un Municipio:</label>
+                <select id="municipio" name="municipio" class="form-control">
+                    <option value="-" selected>-</option>  <!-- Opción por defecto -->
+                    {% for municipio in municipios %}
+                        <option value="{{ municipio }}">{{ municipio }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <button type="submit" class="btn btn-primary">Planear</button>
+        </form>
+    </div>
+  </div>
+  {% endif %}
+  {% if pois %}
     <div class="neighborhood-discovery">
       <div class="places-panel panel no-scroll">
         <header class="navbar">
@@ -1043,6 +1078,11 @@
         <path d="M13 0C5.817 0 0 5.93 0 13.267c0 7.862 5.59 10.81 9.555 17.624C12.09 35.248 11.342 38 13 38c1.723 0 .975-2.817 3.445-7.043C20.085 24.503 26 21.162 26 13.267 26 5.93 20.183 0 13 0Z"/>
       </svg>
     </div>
+  {% endif %}
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCg7ipYMSiRjpqYN1A43W2Qm1ExSu3OQ4s&callback=initMap&libraries=places,geometry&solution_channel=GMP_QB_neighborhooddiscovery_v3_cADEF" async defer></script>
+    <!-- Bootstrap JS (Opcional) -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
   </body>
 </html>

@@ -62,13 +62,15 @@ if __name__ == "__main__":
     PLACE_TYPE = 'lodging'
 
     places = search_places(API_KEY, LATITUDE, LONGITUDE, PLACE_TYPE)
-
+    # print(places)
     for place in places:
         name = place.get('name', 'No disponible')
         address = place.get('vicinity', 'No disponible')
         rating = place.get('rating', 'No disponible')
+        place_id = place.get('place_id', 'No encontrado')
         print(f"Nombre: {name}")
         print(f"Dirección: {address}")
         print(f"Rating: {rating}")
+        print(f"place_id: {place_id}")
         print("------")
 

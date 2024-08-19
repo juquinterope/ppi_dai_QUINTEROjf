@@ -8,7 +8,6 @@ def search_places(latitude: float, longitude: float, place_type: str, radius: in
     Busca lugares cercanos a las coordenadas especificadas usando la API de Places de Google.
 
     Parámetros:
-    - api_key (str): Tu clave de API de Google.
     - latitude (float): Latitud del punto de búsqueda.
     - longitude (float): Longitud del punto de búsqueda.
     - place_type (str): Tipo de lugar a buscar (e.g., 'restaurant', 'lodging').
@@ -25,6 +24,7 @@ def search_places(latitude: float, longitude: float, place_type: str, radius: in
         'location': f'{latitude},{longitude}',
         'radius': radius,
         'type': place_type,
+        # PLACES_API (str): Tu clave de API de Google.
         'key': config('PLACES_API'),
         'locationRestriction': {
             "circle": {
@@ -52,8 +52,9 @@ def search_places(latitude: float, longitude: float, place_type: str, radius: in
             name = place.get('name', 'No disponible')
             address = place.get('vicinity', 'No disponible')
             rating = place.get('rating', 'No disponible')
+            place_id = place.get('place_id', 'No disponible')
             results.append(
-                {'nombre': name, 'direccion': address, 'rating': rating})
+                {'nombre': name, 'direccion': address, 'rating': rating, 'place_id': place_id})
         return results
     else:
         # print(f"Error en la solicitud: {response.status_code}")
