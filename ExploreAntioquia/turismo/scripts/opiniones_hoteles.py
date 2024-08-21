@@ -1,5 +1,9 @@
 import requests
 import numpy as np
+from sklearn.feature_extraction.text import TfidfVectorizer # type: ignore
+from sklearn.cluster import KMeans # type: ignore
+from nltk.corpus import stopwords # type: ignore
+from decouple import config # type: ignore
 
 def obtener_hoteles_cercanos(latitud, longitud, municipio):
     """
@@ -14,7 +18,7 @@ def obtener_hoteles_cercanos(latitud, longitud, municipio):
     - hoteles (list): Lista de diccionarios con la información de los hoteles.
     """
     # Reemplaza con tu clave API de TripAdvisor
-    api_key = 'api'
+    api_key = config('TRIPADVISOR_API')
     url = "https://api.content.tripadvisor.com/api/v1/location/search"
     # headers = {"accept": "application/json"}
     params = {
@@ -62,13 +66,13 @@ def reviews(id, nombre, direccion):
     Raises:
         ValueError: Si la respuesta de la API no tiene el formato esperado o si ocurre un error en la solicitud.
     """
-    api_key = 'api'
+    api_key = config('TRIPADVISOR_API')
     review_url = f'https://api.content.tripadvisor.com/api/v1/location/'
     params = {
         'key': api_key,
         'language': 'es_CO',
         # Número máximo de reseñas a recuperar
-        'limit': 20
+        'limit': 10
     }
 
     # Realiza una solicitud GET a la API para obtener reseñas para el lugar con el id proporcionado
@@ -79,18 +83,14 @@ def reviews(id, nombre, direccion):
         # Convierte la respuesta JSON a un diccionario de Python y obtiene la lista de reseñas
         data = response_2.json().get('data', [])
 
-        # Inicializa listas para almacenar ratings, votos y reseñas
+        # Inicializa listas para almacenar ratings y reseñas
         reviews = []
         ratings = []
-        # votes = []
 
         # Itera sobre cada reseña en los datos obtenidos
         for review in data:
             # Agrega el rating de la reseña a la lista de ratings
             ratings.append(review['rating'])
-
-            # Agrega el número de votos útiles a la lista de votos
-            # votes.append(review['helpful_votes'])
 
             # Agrega un diccionario con el texto, la fecha de viaje y el tipo de viaje a la lista de reseñas
             reviews.append({
@@ -100,8 +100,7 @@ def reviews(id, nombre, direccion):
             })
         
         # Convierte las listas de ratings y votos a arrays de NumPy
-        ratings = np.array(ratings)
-        # votes = np.array(votes)
+        # ratings = np.array(ratings)
 
     else:
         # Manejo de errores si la solicitud no es exitosa
@@ -111,18 +110,58 @@ def reviews(id, nombre, direccion):
     return {'nombre': nombre, 'direccion': direccion, 'ratings': ratings, 'reviews': reviews}
 
 
-# opiniones = reviews(8318317)
-# print(opiniones)
+def extract_top_keywords_per_cluster(tfidf_matrix, cluster_labels, feature_names, top_n=5):
+    clusters_keywords = {}
+    for cluster in np.unique(cluster_labels):
+        # Filtrar las filas pertenecientes al clúster actual
+        cluster_indices = np.where(cluster_labels == cluster)
+        cluster_data = tfidf_matrix[cluster_indices]
 
+        # Sumar las frecuencias de palabras en el clúster
+        word_frequencies = np.sum(cluster_data, axis=0)
 
-# Ejemplo de uso
-latitud = 6.2442   # Latitud de Medellín, Antioquia
-longitud = -75.5812  # Longitud de Medellín, Antioquia
-hoteles = obtener_hoteles_cercanos(latitud, longitud, 'MEDELLIN')
-# print(hoteles)
-opiniones = []
-for hotel in hoteles[:2]:
-    review = reviews(hotel['id'], hotel['nombre'], hotel['direccion'])
-    opiniones.append(review)
+        # Extraer los índices de las palabras con mayor frecuencia
+        top_word_indices = np.argsort(word_frequencies)[0, -top_n:]
 
-print(opiniones)
+        # Obtener las palabras correspondientes
+        top_keywords = [feature_names[i] for i in top_word_indices]
+        clusters_keywords[cluster] = top_keywords
+
+    return clusters_keywords
+
+def cluster_opinions_by_hotel(hotels_data, n_clusters=5):
+    """
+    Agrupa opiniones por temas para cada hotel utilizando KMeans.
+
+    :param hotels_data: Lista de diccionarios, cada uno representando un hotel con sus opiniones.
+    :param n_clusters: Número de clusters/temas a identificar por hotel.
+    :return: Lista de hoteles, cada uno con sus opiniones agrupadas por temas.
+    """
+
+    # Extraer todas las opiniones
+    all_reviews = [review['text'] for hotel in hotels_data for review in hotel['reviews']]
+
+    # Cargar stop words en español de nltk
+    spanish_stop_words = stopwords.words('spanish')
+
+    # Vectorización de las opiniones
+    vectorizer = TfidfVectorizer(stop_words=spanish_stop_words)
+    X = vectorizer.fit_transform(all_reviews)
+
+    # Aplicación de KMeans clustering
+    kmeans = KMeans(n_clusters=n_clusters, random_state=0)
+    clusters = kmeans.fit_predict(X)
+
+    # Extraer palabras clave representativas de cada clúster
+    feature_names = vectorizer.get_feature_names_out()
+    clusters_keywords = extract_top_keywords_per_cluster(X, clusters, feature_names)
+
+    # Asignación de clústeres y palabras clave a las opiniones originales
+    index = 0
+    for hotel in hotels_data:
+        for review in hotel['reviews']:
+            review['cluster'] = int(clusters[index])
+            review['cluster_keywords'] = clusters_keywords[clusters[index]][0].flatten().tolist()
+            index += 1
+
+    return hotels_data

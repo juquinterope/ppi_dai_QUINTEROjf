@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Analizar Municipios de Antioquia</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="{% url 'home' %}">
+            ExploreAntioquia
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'hoteles' %}">Hoteles</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'turismo' %}">Turismo</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'planear_viaje' %}">Planear Viaje</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'explorar_municipios' %}">Explorar Municipios</a>
+                </li>
+                {% if user.is_authenticated %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'logout' %}">Logout</a>
+                </li>
+                {% else %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'login' %}">Login</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'register' %}">Register</a>
+                </li>
+                {% endif %}
+            </ul>
+        </div>
+    </nav>
+    <div class="container mt-4">
+        <div class="card">
+            <div class="card-header">
+                Planear Viaje
+            </div>
+            <div class="card-body">
+                <form method="POST">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label for="municipio">Selecciona un Municipio:</label>
+                        <select id="municipio" name="municipio" class="form-control">
+                            <option value="-" selected>-</option>  <!-- Opción por defecto -->
+                            {% for municipio in municipios %}
+                                <option value="{{ municipio }}">{{ municipio }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Planear</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- Línea divisoria -->
+    <hr style="margin-top: 20px; margin-bottom: 20px; border-top: 1px solid #ccc;">
+    {% if hoteles %}
+        <div class="container" style="max-width: 400px; float: left; margin-top: 20px;">
+            <h3 style="font-size: 1.5rem;">Opiniones Clusterizadas por Hotel</h3>
+            <!-- Formulario de filtrado -->
+            <form method="GET" action="{% url 'hoteles' %}">
+                <div class="form-group">
+                    <label for="keyword">Filtrar por tema:</label>
+                    <select class="form-control" id="keyword" name="keyword">
+                        <option value="{{ keyword }}">Selecciona un tema</option>
+                        {% for keyword in unique_keywords %}
+                            <option value="{{ keyword }}" {% if keyword == keyword %}selected{% endif %}>{{ keyword }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-primary">Filtrar</button>
+            </form>
+        </div>    
+        <!-- Mostrar hoteles y opiniones -->
+        <div class="my-4">
+            <div class="list-group">
+                {% for hotel, data in hoteles.items %}
+                    <div class="list-group-item">
+                        <h3>{{ hotel }}</h3>
+                        <p><strong>Dirección:</strong> {{ data.direccion }}</p>
+
+                        <!-- Mostrar opiniones -->
+                        <ul class="list-group">
+                            {% for opinion in data.opiniones %}
+                                <!-- Mostrar opinión solo si el filtro coincide con el clúster, o si no hay filtro aplicado -->
+                                {% if not keyword or keyword in opinion.cluster_keywords %}
+                                    <li class="list-group-item">
+                                        <p><strong>Fecha:</strong> {{ opinion.date }}</p>
+                                        <p><strong>Tipo de viaje:</strong> {{ opinion.trip }}</p>
+                                        <p><strong>Opinión:</strong> {{ opinion.text }}</p>
+                                        <p><strong>Temas:</strong> {{ opinion.cluster_keywords|join:", " }}</p>
+                                    </li>
+                                {% endif %}
+                            {% endfor %}
+                        </ul>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    {% endif %}
+
+    <!-- Bootstrap JS (Opcional) -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
