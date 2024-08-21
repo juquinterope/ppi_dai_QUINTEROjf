@@ -1,7 +1,7 @@
-from sklearn.feature_extraction.text import TfidfVectorizer # type: ignore
-from sklearn.cluster import KMeans # type: ignore
+from sklearn.feature_extraction.text import TfidfVectorizer  # type: ignore
+from sklearn.cluster import KMeans  # type: ignore
 from hoteles import obtener_hoteles_cercanos, reviews
-from nltk.corpus import stopwords # type: ignore
+from nltk.corpus import stopwords  # type: ignore
 import numpy as np
 # from collections import Counter
 
@@ -25,6 +25,7 @@ def extract_top_keywords_per_cluster(tfidf_matrix, cluster_labels, feature_names
 
     return clusters_keywords
 
+
 def cluster_opinions_by_hotel(hotels_data, n_clusters=5):
     """
     Agrupa opiniones por temas para cada hotel utilizando KMeans.
@@ -35,7 +36,8 @@ def cluster_opinions_by_hotel(hotels_data, n_clusters=5):
     """
 
     # Extraer todas las opiniones
-    all_reviews = [review['text'] for hotel in hotels_data for review in hotel['reviews']]
+    all_reviews = [review['text']
+                   for hotel in hotels_data for review in hotel['reviews']]
 
     # Cargar stop words en español de nltk
     spanish_stop_words = stopwords.words('spanish')
@@ -50,7 +52,8 @@ def cluster_opinions_by_hotel(hotels_data, n_clusters=5):
 
     # Extraer palabras clave representativas de cada clúster
     feature_names = vectorizer.get_feature_names_out()
-    clusters_keywords = extract_top_keywords_per_cluster(X, clusters, feature_names)
+    clusters_keywords = extract_top_keywords_per_cluster(
+        X, clusters, feature_names)
 
     # Asignación de clústeres y palabras clave a las opiniones originales
     index = 0
@@ -75,6 +78,6 @@ if __name__ == '__main__':
     for hotel in hoteles[:3]:
         review = reviews(hotel['id'], hotel['nombre'], hotel['direccion'])
         opiniones.append(review)
-    
+
     cluster = cluster_opinions_by_hotel(opiniones)
     print(cluster)

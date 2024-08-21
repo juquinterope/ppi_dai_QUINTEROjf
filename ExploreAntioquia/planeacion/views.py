@@ -39,7 +39,7 @@ def planear_viaje(request):
         # Capturar latitud y longitud de municipio de interes
         lat, lon = municipios_cercanos.loc[municipios_cercanos['Nombre Municipio']
                                            == nombre_municipio].iloc[0][['Latitud', 'Longitud']]
-        
+
         # Buscar restaurantes en el municipio
         restaurantes = search_places(lat, lon, place_type='restaurant')
 

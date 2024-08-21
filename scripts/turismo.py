@@ -73,4 +73,3 @@ if __name__ == "__main__":
         print(f"Rating: {rating}")
         print(f"place_id: {place_id}")
         print("------")
-

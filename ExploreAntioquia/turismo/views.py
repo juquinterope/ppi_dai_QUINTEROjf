@@ -1,8 +1,8 @@
 import os
-import geopandas as gpd # type: ignore
+import geopandas as gpd  # type: ignore
 from django.shortcuts import render
 from django.conf import settings
-from decouple import config # type: ignore
+from decouple import config  # type: ignore
 from .scripts.puntos_turisticos import map_places
 from .scripts.opiniones_hoteles import obtener_hoteles_cercanos, reviews, cluster_opinions_by_hotel
 
@@ -17,18 +17,18 @@ def ver_turismo(request):
     gdf = gpd.read_file(geojson_path)
     # Extraer la columna "Nombre Municipio"
     municipios = gdf['Nombre Municipio'].tolist()
-    
+
     if request.method == 'POST':
         nombre_municipio = str(request.POST.get('municipio'))
 
         # Manejar el caso donde no se seleccionó un municipio válido
         if nombre_municipio == '-':
             return render(request, 'turismo/mapa_turismo.html', {'PLACES_API': places_api,
-                                                                'pois': False,
-                                                                'center': False,
-                                                                'municipios': municipios,
-                                                                'formulario': True})
-        
+                                                                 'pois': False,
+                                                                 'center': False,
+                                                                 'municipios': municipios,
+                                                                 'formulario': True})
+
         # Filtra el GeoDataFrame para encontrar la fila con el nombre del municipio
         municipio = gdf[gdf['Nombre Municipio'] == nombre_municipio]
         # Asegúrate de que el municipio existe en el GeoDataFrame
@@ -42,7 +42,7 @@ def ver_turismo(request):
                                                              'center': {"lat": lat, "lng": lng},
                                                              'municipios': municipios,
                                                              'formulario': False})
-    
+
     return render(request, 'turismo/mapa_turismo.html', {'PLACES_API': places_api,
                                                          'pois': False,
                                                          'center': False,
@@ -63,7 +63,7 @@ def ver_hoteles(request):
         # Manejar el caso donde no se seleccionó un municipio válido
         if nombre_municipio == '-':
             return render(request, 'turismo/mapa_turismo.html', {'municipios': municipios})
-        
+
         # Filtra el GeoDataFrame para encontrar la fila con el nombre del municipio
         municipio = gdf[gdf['Nombre Municipio'] == nombre_municipio]
         # Asegúrate de que el municipio existe en el GeoDataFrame
@@ -76,7 +76,8 @@ def ver_hoteles(request):
         opiniones = []
         for hotel in hoteles:
             # Ver la review de cada hotel
-            review = reviews(str(hotel['id']), hotel['nombre'], hotel['direccion'])
+            review = reviews(str(hotel['id']),
+                             hotel['nombre'], hotel['direccion'])
             opiniones.append(review)
 
         # Agrupar opiniones por temas
@@ -89,7 +90,7 @@ def ver_hoteles(request):
             hotel_nombre = hotel['nombre']
             hotel_direccion = hotel['direccion']
             hotel_opiniones = hotel['reviews']
-            
+
             for opinion in hotel_opiniones:
                 all_keywords.update(opinion['cluster_keywords'])
             hoteles_clusterizados[hotel_nombre] = {
@@ -116,7 +117,8 @@ def ver_hoteles(request):
             # Filtrar las opiniones por la keyword seleccionada
             filtered_hoteles = {}
             for hotel_name, data in hoteles.items():
-                filtered_opiniones = [op for op in data['opiniones'] if keyword in op.get('cluster_keywords', [])]
+                filtered_opiniones = [
+                    op for op in data['opiniones'] if keyword in op.get('cluster_keywords', [])]
                 if filtered_opiniones:
                     filtered_hoteles[hotel_name] = {
                         'direccion': data['direccion'],

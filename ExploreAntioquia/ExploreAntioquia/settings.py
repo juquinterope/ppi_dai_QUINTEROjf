@@ -43,7 +43,7 @@ INSTALLED_APPS = [
     'usuarios',  # Configuracion de usuarios
     'exploracion',  # Localizacion/Exploracion municipios
     'planeacion',  # Mas informacion sobre municipios
-    'turismo', # Puntos turisticos
+    'turismo',  # Puntos turisticos
 ]
 
 MIDDLEWARE = [

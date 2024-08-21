@@ -1,6 +1,7 @@
 import requests
 import numpy as np
 
+
 def obtener_hoteles_cercanos(latitud, longitud, municipio):
     """
     Consulta la API de TripAdvisor para obtener hoteles cercanos a una coordenada dada.
@@ -27,7 +28,7 @@ def obtener_hoteles_cercanos(latitud, longitud, municipio):
         'language': 'es_CO'
     }
     response = requests.get(url, params=params)
-    
+
     if response.status_code == 200:
         data = response.json()
         data = data.get('data', [])
@@ -35,8 +36,8 @@ def obtener_hoteles_cercanos(latitud, longitud, municipio):
         # id's de los hoteles obtenidos
         for hotel in data:
             hoteles.append({'nombre': hotel['name'], 'id': hotel.get('location_id', 'No disponible'),
-                         'direccion': hotel['address_obj'].get('address_string', 'No disponible')})
-            
+                            'direccion': hotel['address_obj'].get('address_string', 'No disponible')})
+
         return hoteles
     else:
         print("Error al consultar la API:", response.status_code)
@@ -98,7 +99,7 @@ def reviews(id, nombre, direccion):
                 'date': review['travel_date'],  # Fecha del viaje
                 'trip': review['trip_type']  # Tipo de viaje
             })
-        
+
         # Convierte las listas de ratings y votos a arrays de NumPy
         ratings = np.array(ratings)
         # votes = np.array(votes)
@@ -106,7 +107,7 @@ def reviews(id, nombre, direccion):
     else:
         # Manejo de errores si la solicitud no es exitosa
         raise ValueError(f'Error en la solicitud: {response_2.status_code}')
-    
+
     # Retorna una lista con el array de ratings, el array de votos y luego las reseñas
     return {'nombre': nombre, 'direccion': direccion, 'ratings': ratings, 'reviews': reviews}
 
