@@ -13,14 +13,20 @@ El dataframe original con informacion sobre los municipios se obtuvo de [Geoport
 ### Datos en ExploreAntioquia
 Luego de pasar por todos los scripts, ese geojson final son los datos cargados por al app.
 
-### Recolectar clima en tiempo real
+### 4. Recolectar clima en tiempo real
 <clima_municipios.py> Implementa el llamado a la api de [OpenWeatherMap](https://openweathermap.org/api) para recolectar el clima en tiempo real de un municipio dado.
 
-### Buscar municipios cercanos
+### 5. Buscar municipios cercanos
 <municipios_cercanos.py> Busca los municipios mas cercanos al municipio de interes, teniendo en cuenta el geodataframe sobre los [municipios de Antioquia](https://github.com/juquinterope/ppi_dai_QUINTEROjf/blob/main/ExploreAntioquia/data/municipios_antioquia_actualizado.geojson) de la app.
 
-### Mapa de temperaturas
+### 6. Mapa de temperaturas
 <mapa_temperaturas.py> Sobre un mapa base de [contextily](https://contextily.readthedocs.io/en/latest/) aplica un mapa de calor sobre temperaturas de los puntos geograficos dados.
 
-### Places API de Google
+### 7. Places API de Google
 <turismo.py> Es una funcion sencilla que consulta lugares de interes de unas coordenadas dadas usando la [Places API](https://console.cloud.google.com/marketplace/product/google/places-backend.googleapis.com?q=search&referrer=search&organizationId=0) de Google, ver su documentacion para mas informacion.
+
+### 8. Consultar opiniones de hoteles con la API de Tripadvisor
+<hoteles.py> Usa la API de Tripadvisor para consultar opiniones de hoteles cercanos a una coordenada dada, devolviendo datos como: nombre, direccion, opiniones etc...
+
+### 9. Clusterizar las opiniones
+<opinion_clustering.py> Toma todas las opiniones consultadas para analizar los temas principales de estos y agrupar las opiniones segun esos temas, usando tecnicas como: Kmeans y TF-IDF.
