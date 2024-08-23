@@ -16,6 +16,7 @@ RUN apt-get update && \
 
 # Instala las dependencias de Python
 RUN pip install --no-cache-dir -r requirements.txt
+RUN python -m nltk.downloader stopwords
 
 # Copia el script de entrada y dale permisos de ejecución
 COPY entrypoint.sh /entrypoint.sh
