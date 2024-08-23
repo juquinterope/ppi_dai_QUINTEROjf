@@ -3,28 +3,35 @@
 ExploreAntioquia es una aplicación diseñada para brindar a los viajeros experiencias turísticas personalizadas y únicas. La idea principal es utilizar datos turísticos para sugerir itinerarios personalizados, recomendaciones gastronómicas y actividades basadas en las preferencias individuales de los usuarios.
 
 ## Uso
-Puedes copiar la apliacacion localmente usando docker [ExploreAntioquia](https://github.com/juquinterope/ppi_dai_QUINTEROjf/tree/main/ExploreAntioquia)
+Puedes copiar la apliacacion localmente usando [ExploreAntioquia](https://github.com/juquinterope/ppi_dai_QUINTEROjf/tree/main/ExploreAntioquia)
 
 ## Scripts
 La carpeta [scripts](https://github.com/juquinterope/ppi_dai_QUINTEROjf/tree/main/scripts) contiene codigos que se usaron para limpiar y recolectar los datos (csv, geojson etc...) usados en la app.
 
-## Justificación
-En un mundo donde la industria del turismo está en constante crecimiento, los viajeros buscan cada vez más experiencias personalizadas y adaptadas a sus intereses específicos. Turismo Inteligente busca cubrir esta necesidad al proporcionar recomendaciones basadas en datos, permitiendo a los usuarios explorar destinos de una manera más significativa y satisfactoria.
-
 ## Uso de Librerías
 Para llevar a cabo su funcionalidad, se hace uso de varias librerías de Python:
 
-NumPy: Se utiliza para cálculos relacionados con la planificación de itinerarios y para gestionar las preferencias del usuario de manera eficiente.
+contextily: Creacion de mapas base con sistemas de coordenadas.
 
-Pandas: Esta librería es fundamental para la gestión y análisis de datos turísticos. Permite manejar grandes conjuntos de datos de manera estructurada y eficaz.
+django: Framework para crear y administrar la aplicacion web.
 
-Matplotlib: Utilizado para visualizar itinerarios, lugares de interés y recomendaciones gastronómicas en forma de gráficos y mapas, lo que facilita la comprensión de la información para los usuarios.
+geopandas: Esencial para representar geográficamente los lugares de interés y rutas recomendadas. Permite visualizar de manera clara y concisa la información relacionada con destinos turísticos.
 
-Scipy: Aunque no es la principal librería utilizada, Scipy se emplea para posibles análisis estadísticos avanzados relacionados con patrones de viaje, lo que puede contribuir a mejorar la personalización de las recomendaciones.
+io: Manejo de streams.
 
-Geopandas: Esencial para representar geográficamente los lugares de interés y rutas recomendadas. Permite visualizar de manera clara y concisa la información relacionada con destinos turísticos.
+matplotlib: mapas de calor.
 
-¡Esperamos que disfrutes de tus viajes con ExploreAntioquia!
+numPy: Al entrenar modelos de aprendizaje, es necesario almacenar los datos en arrays.
+
+pandas: Esta librería es fundamental para la gestión y análisis de datos. Permite manejar grandes conjuntos de datos de manera estructurada y eficaz.
+
+python-decouple: Cargar las variables de entorno.
+
+requests: Acceder a la informacion de las APIs utilizadas.
+
+scipy: Analisis de lenguaje natural.
+
+nltk: Provee programa para procesar el lenguaje natural.
 
 ## Mas información
 Desarrollado por: Juan Fernando Quintero Perez - Universidad Nacional de Colombia.
