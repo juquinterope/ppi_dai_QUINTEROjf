@@ -1,97 +1,103 @@
 # ExploreAntioquia
 
 ExploreAntioquia es una aplicación sencilla de Django. 
-Este repositorio proporciona instrucciones sobre cómo ejecutar la aplicación localmente usando Docker.
+Este repositorio proporciona instrucciones sobre cómo ejecutar la aplicación localmente.
 
-## Requisitos Previos
+## *Crear el entorno*
 
-Antes de comenzar, asegúrate de tener instalados en tu máquina local:
+Clonar el repositorio localmente:
+```bash
+git clone https://github.com/juquinterope/ppi_dai_QUINTEROjf.git
+```
 
-- [Docker](https://www.docker.com/get-started)
-- Crear un directorio y abrir una nueva terminal dentro de este.
+Cambia al directorio donde esta alojado el proyecto django: /ExploreAntioquia desde el repositorio clonado:
+```bash
+cd ExploreAntioquia
+```
 
-## Ejecutar la Aplicación Localmente
+Crea un entorno local de python 3.11 usando venv para correr la app:
+```bash
+python -m venv .venv
+```
+Si se cuenta con varias versiones de python, consulta como crear el entorno con esa version especifica.
 
-1. **Crear la Imagen Docker a partir de Docker Hub**
+Activa el entorno virtual:
+```bash
+.venv/Scripts/activate
+```
 
-   Primero, descarga la imagen Docker desde Docker Hub dentro de un directorio. Esta imagen contiene la aplicación preconstruida:
+Instala las librerias necesarias:
+```bash
+pip install -r requirements.txt
+```
 
-   ```bash
-   docker pull juanqu/explore-antioquia:1.3
-   ```
+## *Configura las variables de entorno*
 
-   Crear un contenedor temporal para acceder a los archivos:
-   ```bash
-   docker create --name temp-container explore-antioquia:1.3
-   ```
-   Copiar el archivo entrypoint.sh del contenedor temporal a la máquina local:
-   ```bash
-   docker cp temp-container:/app/entrypoint.sh ./entrypoint.sh
-   ```
-   Detener y remover el contenedor temporal:
-   ```bash
-   docker rm temp-container
-   ```
+Recuerda estar en el directorio ./ExploreAntioquia
+En la raiz del proyecto django, crea un archivo llamado: '.env' y crea estas variables:
 
-   Modifica el archivo entrypoint.sh que se creo en el directorio local.
-   'entrypoint.sh file'
-   ```bash
-   #!/bin/bash
-   set -e
+SECRET_KEY=new_secret_key
 
-   # Migrar nueva base de datos
-   echo "Exportando esquema de la base de datos..."
-   python manage.py makemigrations
-   python manage.py migrate
-   
-   # Ejecutar collectstatic
-   echo "Running collectstatic..."
-   python manage.py collectstatic --noinput
-   
-   # Iniciar Gunicorn
-   echo "Starting Gunicorn..."
-   exec gunicorn --bind 0.0.0.0:8000 ExploreAntioquia.wsgi:application
-   ```
-   
-   Una vez que hayas modificado entrypoint.sh, puedes crear un nuevo Dockerfile que use la imagen original como base e incluya el entrypoint.sh modificado:
-   ```bash
-   echo -e "FROM explore-antioquia:1.2\nCOPY entrypoint.sh /app/entrypoint.sh\nENTRYPOINT [\"/bin/sh\", \"/app/entrypoint.sh\"]" > Dockerfile
-   ```
-   Construir una nueva imagen con el entrypoint.sh modificado:
-   ```bash
-   docker build -t explore-antioquia-modificada .
-   ```
-3. **Configurar el Archivo .env**
+DEBUG=True
 
-   Para que la aplicación funcione correctamente, hay configurar el archivo .env
-   El archivo debe estar en la raíz del directorio del proyecto y debe incluir las credenciales requeridas.
-   La base de datos puede ser local, en cualquier caso debe usar el motor PostgreSQL.
+DB_NAME=database_name
 
-   **Ejemplo de archivo .env**
-   
-   DB_NAME=tu_nombre_de_base_de_datos
-   
-   DB_USER=tu_usuario_de_base_de_datos
-   
-   DB_PASSWORD=tu_contraseña_de_base_de_datos
-   
-   DB_HOST=db
-   
-   DB_PORT=5432
+DB_USER=database_user
 
-   WEATHER_API=openweathermap_api
+DB_PASSWORD=database_password
 
-   PLACES_API=tu_api_places_de_google
+DB_HOST=database_host
 
-5. **Ejecutar el contenedor**
+DB_PORT=5432
 
-   ```bash
-   docker run -p 8000:8000 --env-file .env explore-antioquia-modificada
-   ```
+WEATHER_API=OpenWeatherMap_API
 
-   Asi se puede correr la imagen cargando tus crendenciales.
+PLACES_API=Google_places_API
 
-6. **Acceder a la app**
+TRIPADVISOR_API=tripadvisor_API
 
-   Con estas configuraciones, la app deberia estar alojada en: http://localhost:8000
-   
+
+Crea una nueva secret_key para el proyecto django:
+```bash
+python manage.py shell -c "from django.core.management.utils import get_random_secret_key; print(get_random_secret_key())"
+```
+Copia y pega el resultado en la variable de entorno SECRET_KEY
+
+   - ### Credenciales de la base de datos
+   La aplicacion funciona con una base de datos PostgreSQL, puedes crearla localmente, al correr la app la base de datos debe estar activa.
+
+   - ### OpenWeatherMap
+   Para crear una api de esta servicio dirigete a [openweathermap](https://openweathermap.org/api), crea una cuenta y luego ve a la seccion: My API keys.
+
+   Puedes crear una API gratuita, copia la KEY de la API creada y pegala en la varible de entorno: WEATHER_API
+
+   - ### Google maps API
+   Para usar la API de maps de Google, crea una cuenta en [GCP](https://console.cloud.google.com/), puedes seguir el [tutorial](https://developers.google.com/maps/get-started) para crear al API de places.
+   Cuando tengas tu API, pegala en la variable de entorno: PLACES_API
+
+   - ### Tripadvisor API
+   Crea una cuenta en [Tripadvisor](https://www.tripadvisor.com/developers) y sigue los pasos que indican para obtener la API. Esta api pegala en la variable TRIPADVISOR_API
+
+## *Ejecutar app*
+
+Una vez esten listas las variables de entorno, puedes correr el proyecto.
+
+Asegurate de que los archivos estaticos estan cargados:
+```bash
+python manage.py collectstatic
+```
+Deberias ver que los archivos fueron añadidos con exito al directorio /staticfiles
+
+Migra la app a tu base de datos:
+```bash
+python manage.py makemigrations
+python manage.py migrate
+```
+Estos comandos tambien te permiten comprobar si la base de datos corre exitosamente.
+
+Ejecuta la app:
+```bash
+python manage.py runserver
+```
+
+En la terminal se imprimira el link donde se estara ejecutando el proyecto.
