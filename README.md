@@ -3,7 +3,7 @@
 ExploreAntioquia es una aplicación diseñada para brindar a los viajeros experiencias turísticas personalizadas y únicas. La idea principal es utilizar datos turísticos para sugerir itinerarios personalizados, recomendaciones gastronómicas y actividades basadas en las preferencias individuales de los usuarios.
 
 ## Uso
-Puedes ejecutar la apliacacion localmente: [ExploreAntioquia](https://github.com/juquinterope/ppi_dai_QUINTEROjf/tree/main/ExploreAntioquia)
+Puedes ejecutar la aplicacion localmente: [ExploreAntioquia](https://github.com/juquinterope/ppi_dai_QUINTEROjf/tree/main/ExploreAntioquia)
 
 ## Scripts
 La carpeta [scripts](https://github.com/juquinterope/ppi_dai_QUINTEROjf/tree/main/scripts) contiene codigos que se usaron para limpiar y recolectar los datos (csv, geojson etc...) usados en la app.
