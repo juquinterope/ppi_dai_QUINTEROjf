@@ -19,7 +19,7 @@ geopandas: Esencial para representar geográficamente los lugares de interés y 
 
 io: Manejo de streams.
 
-matplotlib: mapas de calor.
+matplotlib: Generacion de mapas de calor.
 
 numPy: Al entrenar modelos de aprendizaje, es necesario almacenar los datos en arrays.
 
@@ -31,7 +31,7 @@ requests: Acceder a la informacion de las APIs utilizadas.
 
 scipy: Analisis de lenguaje natural.
 
-nltk: Provee programa para procesar el lenguaje natural.
+nltk: Provee funciones para procesar el lenguaje natural.
 
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
