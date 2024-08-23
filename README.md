@@ -33,6 +33,8 @@ scipy: Analisis de lenguaje natural.
 
 nltk: Provee programa para procesar el lenguaje natural.
 
+------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
 Uso de librerias de *javascript*:
 
 leaflet: Mapas interactivos optimizados para el navegador.
