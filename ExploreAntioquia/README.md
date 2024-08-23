@@ -66,6 +66,8 @@ Copia y pega el resultado en la variable de entorno SECRET_KEY
    - ### Credenciales de la base de datos
    La aplicacion funciona con una base de datos PostgreSQL, puedes crearla localmente, al correr la app la base de datos debe estar activa.
 
+   Puedes crear una base de datos gratuita en [render](https://dashboard.render.com/) solo se necesita crear una cuenta.
+
    - ### OpenWeatherMap
    Para crear una api de esta servicio dirigete a [openweathermap](https://openweathermap.org/api), crea una cuenta y luego ve a la seccion: My API keys.
 
