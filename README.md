@@ -9,7 +9,7 @@ Puedes copiar la apliacacion localmente usando [ExploreAntioquia](https://github
 La carpeta [scripts](https://github.com/juquinterope/ppi_dai_QUINTEROjf/tree/main/scripts) contiene codigos que se usaron para limpiar y recolectar los datos (csv, geojson etc...) usados en la app.
 
 ## Uso de Librerías
-Para llevar a cabo su funcionalidad, se hace uso de varias librerías de Python:
+Para llevar a cabo su funcionalidad, se hace uso de varias librerías de *Python*:
 
 contextily: Creacion de mapas base con sistemas de coordenadas.
 
@@ -32,6 +32,10 @@ requests: Acceder a la informacion de las APIs utilizadas.
 scipy: Analisis de lenguaje natural.
 
 nltk: Provee programa para procesar el lenguaje natural.
+
+Uso de librerias de *javascript*:
+
+leaflet: Mapas interactivos optimizados para el navegador.
 
 ## Mas información
 Desarrollado por: Juan Fernando Quintero Perez - Universidad Nacional de Colombia.
