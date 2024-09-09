@@ -9,6 +9,19 @@ from .scripts.opiniones_hoteles import obtener_hoteles_cercanos, reviews, cluste
 
 # Create your views here.
 def ver_turismo(request):
+    """Procesa la solicitud para mostrar información turística de un municipio seleccionado. 
+    Si se recibe una solicitud POST con un municipio válido, busca lugares de interés 
+    cercanos y muestra un mapa con esos lugares. 
+
+    Args:
+        request (HttpRequest): La solicitud HTTP que puede incluir un formulario con el 
+                               nombre del municipio.
+
+    Returns:
+        HttpResponse: Respuesta HTTP que renderiza la plantilla 'mapa_turismo.html' 
+                      con los lugares de interés, centro del mapa, municipios disponibles, 
+                      y estado del formulario.
+    """
     places_api = config('PLACES_API')
     geojson_path = os.path.join(
         settings.BASE_DIR, 'data', 'municipios_antioquia_actualizado.geojson')
@@ -51,6 +64,19 @@ def ver_turismo(request):
 
 
 def ver_hoteles(request):
+    """Procesa la solicitud para mostrar información sobre hoteles en un municipio seleccionado. 
+    Si se recibe una solicitud POST con un municipio válido, busca hoteles cercanos, 
+    obtiene y agrupa opiniones sobre esos hoteles. 
+
+    Args:
+        request (HttpRequest): La solicitud HTTP que puede incluir un formulario con el 
+                               nombre del municipio y un parámetro de filtrado por palabra clave.
+
+    Returns:
+        HttpResponse: Respuesta HTTP que renderiza la plantilla 'hoteles.html' con la 
+                      información de hoteles, opiniones agrupadas, palabras clave, y municipios 
+                      disponibles.
+    """
     geojson_path = os.path.join(
         settings.BASE_DIR, 'data', 'municipios_antioquia_actualizado.geojson')
     # Cargar el GeoDataFrame desde el archivo GeoJSON

@@ -5,8 +5,7 @@ import contextily as ctx  # type: ignore
 
 
 def mapa_calor(gdf):
-    """
-    Genera un mapa de calor para un GeoDataFrame utilizando datos de temperatura.
+    """Genera un mapa de calor para un GeoDataFrame utilizando datos de temperatura.
 
     Esta función crea un mapa visualizando las coordenadas geográficas contenidas en el GeoDataFrame `gdf`,
     aplica un mapa de calor basado en las temperaturas y añade un mapa base utilizando `contextily`.

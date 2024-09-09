@@ -6,6 +6,22 @@ from django.conf import settings
 
 
 def explorar_municipios(request):
+    """Vista para explorar los municipios de Antioquia utilizando datos 
+    geoespaciales.
+
+    Esta función carga un archivo GeoJSON que contiene información 
+    geográfica sobre los municipios de Antioquia, lo convierte a 
+    formato JSON, y luego renderiza una plantilla HTML pasando 
+    los datos para su visualización.
+
+    Args:
+        request (HttpRequest): El objeto de solicitud HTTP.
+
+    Returns:
+        HttpResponse: Respuesta que renderiza la plantilla 
+                      'exploracion/explorar_municipios.html' con los 
+                      datos de los municipios en formato JSON.
+    """
     # Ruta al archivo GeoJSON
     geojson_path = os.path.join(
         settings.BASE_DIR, 'data', 'municipios_antioquia_actualizado.geojson')
@@ -21,6 +37,22 @@ def explorar_municipios(request):
 
 
 def municipio_detalle(request, id):
+    """Vista para obtener los detalles de un municipio específico de Antioquia.
+
+    Esta función carga un archivo GeoJSON que contiene la información 
+    geográfica y descriptiva de los municipios de Antioquia, busca el 
+    municipio correspondiente al `id` proporcionado, y devuelve la 
+    información en formato JSON.
+
+    Args:
+        request (HttpRequest): El objeto de solicitud HTTP.
+        id (str): El nombre del municipio cuyo detalle se desea obtener.
+                  Los espacios en blanco deben estar codificados como '%20'.
+
+    Returns:
+        JsonResponse: Un objeto JSON que contiene el nombre y la descripción 
+                      del municipio solicitado.
+    """
     # Ruta al archivo GeoJSON
     geojson_path = os.path.join(
         settings.BASE_DIR, 'data', 'municipios_antioquia_actualizado.geojson')

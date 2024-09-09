@@ -4,8 +4,7 @@ from decouple import config  # type: ignore
 
 
 def search_places(latitude: float, longitude: float, place_type: str, radius: int = 3000) -> List[Dict[str, Any]]:
-    """
-    Busca lugares cercanos a las coordenadas especificadas usando la API de Places de Google.
+    """Busca lugares cercanos a las coordenadas especificadas usando la API de Places de Google.
 
     Parámetros:
     - latitude (float): Latitud del punto de búsqueda.

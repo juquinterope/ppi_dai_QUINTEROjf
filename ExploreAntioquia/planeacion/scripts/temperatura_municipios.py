@@ -13,6 +13,28 @@ matplotlib.use('Agg')
 
 
 def municipios_mas_cercanos(nombre_municipio, municipios, num_cercanos=5):
+    """Encuentra los municipios más cercanos a un municipio de referencia 
+    utilizando geometría geoespacial.
+
+    Esta función selecciona un municipio de referencia por su nombre, 
+    calcula la distancia a todos los demás municipios, y devuelve una 
+    lista de los municipios más cercanos junto con su distancia en metros 
+    y sus coordenadas.
+
+    Args:
+        nombre_municipio (str): El nombre del municipio de referencia.
+        municipios (GeoDataFrame): Un GeoDataFrame que contiene la geometría 
+                                   y los datos de los municipios.
+        num_cercanos (int, opcional): El número de municipios más cercanos 
+                                      a devolver. El valor predeterminado 
+                                      es 5.
+
+    Returns:
+        GeoDataFrame: Un GeoDataFrame con los municipios más cercanos, 
+                      incluyendo el nombre, la distancia, la latitud 
+                      y la longitud. Devuelve `None` si el municipio 
+                      de referencia no se encuentra.
+    """
     # Seleccionar el municipio de referencia
     municipio_ref = municipios[municipios['Nombre Municipio']
                                == nombre_municipio]
@@ -37,6 +59,24 @@ def municipios_mas_cercanos(nombre_municipio, municipios, num_cercanos=5):
 
 
 def obtener_datos_climaticos(lat, lon):
+    """Obtiene datos climáticos actuales para una ubicación específica 
+    utilizando la API de OpenWeatherMap.
+
+    Esta función realiza una solicitud a la API de OpenWeatherMap para 
+    obtener la temperatura actual y una descripción del clima para 
+    las coordenadas proporcionadas. 
+
+    Args:
+        lat (float): Latitud de la ubicación deseada.
+        lon (float): Longitud de la ubicación deseada.
+
+    Returns:
+        dict: Un diccionario con la temperatura actual ('temperatura') 
+              y la descripción del clima ('descripcion') en español si 
+              la solicitud es exitosa.
+        None: Devuelve `None` si la solicitud a la API falla.
+    """
+
     api_key = config('WEATHER_API')
 
     base_url = f"https://api.openweathermap.org/data/3.0/onecall?lat={lat}&lon={lon}&exclude=minutely,hourly,daily,alerts&appid={api_key}&units=metric&lang=es"
@@ -52,6 +92,23 @@ def obtener_datos_climaticos(lat, lon):
 
 
 def mapa_calor(gdf):
+    """Genera un mapa de calor de temperaturas basado en un GeoDataFrame, 
+    y lo convierte en una imagen codificada en base64.
+
+    La función crea un mapa de calor sobre un mapa base que muestra las 
+    temperaturas en diferentes municipios. También genera una tabla 
+    con los nombres de los municipios y sus temperaturas correspondientes.
+    La imagen resultante se guarda en un objeto BytesIO y se convierte 
+    a una cadena base64 para ser utilizada en aplicaciones web.
+
+    Args:
+        gdf (GeoDataFrame): Un GeoDataFrame que contiene la geometría y 
+                            los datos de temperatura de los municipios.
+
+    Returns:
+        str: Una cadena de texto que representa la imagen del mapa de calor 
+             codificada en formato base64.
+    """
     # Crear la figura y los ejes
     fig, ax = plt.subplots(1, 2, figsize=(
         16, 8), gridspec_kw={'width_ratios': [4, 1]})

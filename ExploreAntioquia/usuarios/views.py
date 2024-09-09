@@ -9,6 +9,17 @@ def home(request):
 
 
 def register(request):
+    """Maneja el registro de nuevos usuarios.
+
+    Si la solicitud es 'POST', valida y guarda el nuevo usuario, y luego inicia sesión automáticamente. 
+    Si la solicitud es 'GET', muestra el formulario de registro.
+
+    Args:
+        request (HttpRequest): La solicitud HTTP recibida.
+
+    Returns:
+        HttpResponse: Redirige a la página de inicio tras un registro exitoso o muestra el formulario de registro.
+    """
     # Si el formulario de login es enviado 'POST'
     if request.method == 'POST':
         # Se registra el formulario en el modelo de django,

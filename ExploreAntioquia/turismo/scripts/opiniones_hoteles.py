@@ -7,8 +7,7 @@ from decouple import config  # type: ignore
 
 
 def obtener_hoteles_cercanos(latitud, longitud, municipio):
-    """
-    Consulta la API de TripAdvisor para obtener hoteles cercanos a una coordenada dada.
+    """Consulta la API de TripAdvisor para obtener hoteles cercanos a una coordenada dada.
 
     Parámetros:
     - latitud (float): Latitud de la ubicación.
@@ -49,8 +48,7 @@ def obtener_hoteles_cercanos(latitud, longitud, municipio):
 
 
 def reviews(id, nombre, direccion):
-    """
-    Obtiene reseñas de un lugar específico de TripAdvisor usando su API.
+    """Obtiene reseñas de un lugar específico de TripAdvisor usando su API.
 
     Args:
         id (str): El identificador del lugar en TripAdvisor para el cual se desean obtener las reseñas.
@@ -112,6 +110,20 @@ def reviews(id, nombre, direccion):
 
 
 def extract_top_keywords_per_cluster(tfidf_matrix, cluster_labels, feature_names, top_n=5):
+    """Extrae las principales palabras clave para cada clúster basado en una matriz TF-IDF.
+
+    Args:
+        tfidf_matrix (numpy.ndarray): Matriz TF-IDF donde cada fila representa un documento 
+                                      y cada columna una palabra del vocabulario.
+        cluster_labels (numpy.ndarray): Etiquetas de clúster para cada documento en la matriz TF-IDF.
+        feature_names (list of str): Lista de nombres de las características (palabras).
+        top_n (int, opcional): Número de palabras clave principales a extraer por clúster. 
+                               Por defecto es 5.
+
+    Returns:
+        dict: Un diccionario donde las claves son los índices de los clústeres y los valores 
+              son listas de las principales palabras clave para cada clúster.
+    """
     clusters_keywords = {}
     for cluster in np.unique(cluster_labels):
         # Filtrar las filas pertenecientes al clúster actual
@@ -132,8 +144,7 @@ def extract_top_keywords_per_cluster(tfidf_matrix, cluster_labels, feature_names
 
 
 def cluster_opinions_by_hotel(hotels_data, n_clusters=5):
-    """
-    Agrupa opiniones por temas para cada hotel utilizando KMeans.
+    """Agrupa opiniones por temas para cada hotel utilizando KMeans.
 
     :param hotels_data: Lista de diccionarios, cada uno representando un hotel con sus opiniones.
     :param n_clusters: Número de clusters/temas a identificar por hotel.

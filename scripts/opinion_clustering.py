@@ -46,8 +46,7 @@ def extract_top_keywords_per_cluster(tfidf_matrix, cluster_labels, feature_names
 
 
 def cluster_opinions_by_hotel(hotels_data, n_clusters=5):
-    """
-    Agrupa opiniones por temas para cada hotel utilizando KMeans.
+    """Agrupa opiniones por temas para cada hotel utilizando KMeans.
 
     :param hotels_data: Lista de diccionarios, cada uno representando un hotel con sus opiniones.
     :param n_clusters: Número de clusters/temas a identificar por hotel.

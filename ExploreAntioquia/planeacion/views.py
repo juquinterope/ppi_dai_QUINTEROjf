@@ -7,6 +7,19 @@ from .scripts.places_api import search_places
 
 
 def planear_viaje(request):
+    """Maneja la planificación de un viaje seleccionando un municipio en Antioquia.
+    Genera un mapa de calor con temperaturas de municipios cercanos y busca 
+    restaurantes en el municipio seleccionado.
+
+    Args:
+        request (HttpRequest): La solicitud HTTP que puede incluir un formulario 
+                               con el nombre del municipio.
+
+    Returns:
+        HttpResponse: Respuesta HTTP que renderiza la plantilla 'planear_viaje.html' 
+                      con los municipios, mapa de calor en base64, restaurantes, 
+                      y el nombre del municipio seleccionado.
+    """
     # Ruta al archivo GeoJSON
     geojson_path = os.path.join(
         settings.BASE_DIR, 'data', 'municipios_antioquia_actualizado.geojson')

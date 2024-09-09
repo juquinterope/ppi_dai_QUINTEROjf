@@ -3,8 +3,7 @@ import numpy as np
 
 
 def obtener_hoteles_cercanos(latitud, longitud, municipio):
-    """
-    Consulta la API de TripAdvisor para obtener hoteles cercanos a una coordenada dada.
+    """Consulta la API de TripAdvisor para obtener hoteles cercanos a una coordenada dada.
 
     Parámetros:
     - latitud (float): Latitud de la ubicación.
@@ -45,8 +44,7 @@ def obtener_hoteles_cercanos(latitud, longitud, municipio):
 
 
 def reviews(id, nombre, direccion):
-    """
-    Obtiene reseñas de un lugar específico de TripAdvisor usando su API.
+    """Obtiene reseñas de un lugar específico de TripAdvisor usando su API.
 
     Args:
         id (str): El identificador del lugar en TripAdvisor para el cual se desean obtener las reseñas.

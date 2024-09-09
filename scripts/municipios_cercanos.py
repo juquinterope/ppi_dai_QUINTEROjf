@@ -2,8 +2,7 @@ import geopandas as gpd  # type: ignore
 
 
 def municipios_mas_cercanos(nombre_municipio, municipios, num_cercanos=5):
-    """
-    Encuentra los municipios más cercanos a un municipio de referencia en un GeoDataFrame.
+    """Encuentra los municipios más cercanos a un municipio de referencia en un GeoDataFrame.
 
     Esta función busca los municipios más cercanos al municipio especificado en el GeoDataFrame `municipios`.
     Utiliza la distancia geográfica para determinar qué municipios están más cerca del municipio de referencia.
