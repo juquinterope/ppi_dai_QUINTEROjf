@@ -11,6 +11,8 @@ driver = webdriver.Chrome()
 gdf = gpd.read_file('/data/municipios_antioquia.geojson')
 
 # Función para formatear el nombre
+
+
 def format_name(name):
     """Formatea un nombre de municipio según una convención específica.
 
@@ -38,6 +40,8 @@ def format_name(name):
 gdf['Descripcion'] = ""
 
 # Funcion para consultar las url
+
+
 def fetch_description(url):
     """Extrae la descripción de la sección 'Historia' de wikipedia.
 

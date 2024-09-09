@@ -7,6 +7,7 @@ import pandas as pd
 geojson_file = "../ExploreAntioquia/data/municipios_antioquia_actualizado.geojson"
 municipios = gpd.read_file(geojson_file)
 
+
 def obtener_datos_climaticos(lat, lon):
     """Esta función realiza una solicitud a la API de OpenWeatherMap para obtener
     los datos climáticos actuales de una ubicación específica basada en su
