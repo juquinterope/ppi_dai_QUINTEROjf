@@ -3,10 +3,29 @@ from sklearn.cluster import KMeans  # type: ignore
 from hoteles import obtener_hoteles_cercanos, reviews
 from nltk.corpus import stopwords  # type: ignore
 import numpy as np
-# from collections import Counter
 
 
 def extract_top_keywords_per_cluster(tfidf_matrix, cluster_labels, feature_names, top_n=5):
+    """Extrae las palabras clave principales para cada clúster basado en una matriz TF-IDF.
+
+    Esta función agrupa los documentos según sus etiquetas de clúster, 
+    calcula la suma de las frecuencias de palabras dentro de cada clúster, 
+    y selecciona las palabras clave con mayor frecuencia (es decir, los términos 
+    más representativos) para cada clúster.
+
+    Args:
+        tfidf_matrix (numpy.ndarray): La matriz TF-IDF en la que las filas 
+                                      representan documentos y las columnas representan términos.
+        cluster_labels (numpy.ndarray): Un array de etiquetas de clúster asignadas a los documentos.
+        feature_names (list): Una lista de nombres de las características (palabras) correspondientes 
+                              a las columnas de la matriz TF-IDF.
+        top_n (int, opcional): El número de palabras clave principales a extraer por clúster. 
+                               El valor predeterminado es 5.
+
+    Returns:
+        dict: Un diccionario donde las claves son los identificadores de los clústeres 
+              y los valores son listas de las palabras clave principales de cada clúster.
+    """
     clusters_keywords = {}
     for cluster in np.unique(cluster_labels):
         # Filtrar las filas pertenecientes al clúster actual

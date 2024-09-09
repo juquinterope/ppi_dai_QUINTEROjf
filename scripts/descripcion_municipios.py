@@ -11,9 +11,19 @@ driver = webdriver.Chrome()
 gdf = gpd.read_file('/data/municipios_antioquia.geojson')
 
 # Función para formatear el nombre
-
-
 def format_name(name):
+    """Formatea un nombre de municipio según una convención específica.
+
+    Esta función capitaliza cada palabra en el nombre y reemplaza los espacios en blanco 
+    por guiones bajos ('_'). Hay una excepción para el nombre "SANTA FÉ DE ANTIOQUIA", 
+    que se formatea como 'Santa_Fe_de_Antioquia' independientemente de las reglas generales.
+
+    Args:
+        name (str): El nombre del municipio a formatear.
+
+    Returns:
+        str: El nombre formateado según las reglas descritas.
+    """
     # Este es el unico nombre que no sigue la secuencia
     if name == "SANTA FÉ DE ANTIOQUIA":
         formatted = 'Santa_Fe_de_Antioquia'
@@ -28,9 +38,22 @@ def format_name(name):
 gdf['Descripcion'] = ""
 
 # Funcion para consultar las url
-
-
 def fetch_description(url):
+    """Extrae la descripción de la sección 'Historia' de wikipedia.
+
+    Esta función utiliza un navegador automatizado (controlado por `selenium`) 
+    para navegar a la URL proporcionada, buscar el elemento `<h2>` con el 
+    atributo `id='Historia'`, y extraer el texto del primer párrafo (`<p>`) 
+    que aparece después de este elemento. Si no se encuentra el elemento o 
+    ocurre un error, se devuelve un mensaje predeterminado.
+
+    Args:
+        url (str): La URL de la página web de la cual se desea extraer la descripción.
+
+    Returns:
+        str: El texto de la descripción extraída, o un mensaje de error si la 
+             descripción no se pudo encontrar.
+    """
     # Hacer que el 'bot' navegue a la url
     driver.get(url)
 
