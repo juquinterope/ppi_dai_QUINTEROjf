@@ -44,21 +44,59 @@ def search_places(latitude: float, longitude: float, place_type: str, words: str
     if response.status_code == 200:
         results = response.json().get('results', [])
 
-        # Filtrar y ordenar por rating
-        sorted_results = sorted(
-            results, key=lambda x: x.get('rating', 0), reverse=True)
-        results = []
-        for place in sorted_results:
+        # Si no se encuentran resultados, intentar con el parque principal
+        if not results:
+            print("No se encontraron lugares, buscando el parque principal.")
+            return search_main_square(latitude, longitude, radius)
+        
+        places = []
+        for place in results:
             name = place.get('name', 'No disponible')
             address = place.get('vicinity', 'No disponible')
             rating = place.get('rating', 'No disponible')
             place_id = place.get('place_id', 'No disponible')
-            results.append(
+            places.append(
                 {'nombre': name, 'direccion': address, 'rating': rating, 'place_id': place_id})
-        return results
+        return places
     else:
-        # print(f"Error en la solicitud: {response.status_code}")
-        return 'fallo'
+        return 'Error'
+
+
+def search_main_square(latitude: float, longitude: float, radius: int) -> List[Dict[str, Any]]:
+    """Busca el parque principal en caso de que no se encuentren otros lugares."""
+    
+    print('Buscando parque principal')
+    # Parámetros para buscar el parque principal
+    url = 'https://maps.googleapis.com/maps/api/place/nearbysearch/json'
+    params = {
+        'location': f'{latitude},{longitude}',
+        'radius': radius,
+        'type': 'park',  # Asumimos que el parque principal está etiquetado como 'park'
+        'keyword': 'parque principal',
+        'key': config('PLACES_API'),
+    }
+
+    # Realiza la solicitud
+    response = requests.get(url, params=params)
+
+    # Verifica el estado de la solicitud
+    if response.status_code == 200:
+        results = response.json().get('results', [])
+        
+        if results:
+            # Formatear el primer resultado del parque principal
+            park = results[0]
+            name = park.get('name', 'Parque Principal')
+            address = park.get('vicinity', 'No disponible')
+            rating = park.get('rating', 'No disponible')
+            place_id = park.get('place_id', 'No disponible')
+            
+            return [{'nombre': name, 'direccion': address, 'rating': rating, 'place_id': place_id}]
+        else:
+            # Si no se encuentra parque, devolver las coordenadas dadas
+            return [{'nombre': 'Parque Principal', 'direccion': 'Coordenadas proporcionadas', 'rating': 'No disponible', 'place_id': 'No disponible'}]
+    else:
+        return 'Error al buscar el parque principal.'
 
 
 def map_places(latitude: float, longitude: float):
