@@ -48,7 +48,7 @@ def search_places(latitude: float, longitude: float, place_type: str, words: str
         if not results:
             print("No se encontraron lugares, buscando el parque principal.")
             return search_main_square(latitude, longitude, radius)
-        
+
         places = []
         for place in results:
             name = place.get('name', 'No disponible')
@@ -64,7 +64,7 @@ def search_places(latitude: float, longitude: float, place_type: str, words: str
 
 def search_main_square(latitude: float, longitude: float, radius: int) -> List[Dict[str, Any]]:
     """Busca el parque principal en caso de que no se encuentren otros lugares."""
-    
+
     print('Buscando parque principal')
     # Parámetros para buscar el parque principal
     url = 'https://maps.googleapis.com/maps/api/place/nearbysearch/json'
@@ -82,7 +82,7 @@ def search_main_square(latitude: float, longitude: float, radius: int) -> List[D
     # Verifica el estado de la solicitud
     if response.status_code == 200:
         results = response.json().get('results', [])
-        
+
         if results:
             # Formatear el primer resultado del parque principal
             park = results[0]
@@ -90,7 +90,7 @@ def search_main_square(latitude: float, longitude: float, radius: int) -> List[D
             address = park.get('vicinity', 'No disponible')
             rating = park.get('rating', 'No disponible')
             place_id = park.get('place_id', 'No disponible')
-            
+
             return [{'nombre': name, 'direccion': address, 'rating': rating, 'place_id': place_id}]
         else:
             # Si no se encuentra parque, devolver las coordenadas dadas
