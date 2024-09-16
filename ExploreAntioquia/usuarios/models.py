@@ -16,7 +16,8 @@ class Itinerario(models.Model):
 
 
 class Actividad(models.Model):
-    itinerario = models.ForeignKey(Itinerario, related_name='actividades', on_delete=models.CASCADE)
+    itinerario = models.ForeignKey(
+        Itinerario, related_name='actividades', on_delete=models.CASCADE)
     nombre = models.CharField(max_length=200)
     # Transporte, visita, comida, etc.
     tipo_actividad = models.CharField(max_length=100)

@@ -14,7 +14,7 @@ def home(request):
 
     Args:
         request (HttpRequest): La solicitud HTTP recibida.
-    
+
     Returns:
         HttpResponse: Si hay una sesion de usuario iniciada, mostrara los itinerarios
         asociados.
@@ -45,7 +45,7 @@ def detalle_itinerario(request, itinerario_id):
     Args:
         request (HttpRequest): La solicitud HTTP recibida.
         itinerario_id : El id del itinerario a cambiar, esto es manejado automaticamente
-    
+
     Returns:
         HttpResponse: Mostrara los detalles del itinerario seleccionado y permitira
         agregar actividades al mismo.
@@ -58,14 +58,16 @@ def detalle_itinerario(request, itinerario_id):
         if actividad_form.is_valid():
             nueva_actividad = actividad_form.save(commit=False)
             # Ajustar la duración manualmente
-            duracion = actividad_form.cleaned_data['duracion']  # Obtener el valor del form
-            
+            # Obtener el valor del form
+            duracion = actividad_form.cleaned_data['duracion']
+
             # Ajustar el campo de duracion a horas,
             # Si es menos de 1 hora (3600 segundos)
             if duracion.total_seconds() < 3600:
                 horas = duracion.seconds // 60  # Obtener las horas a partir de los minutos
                 minutos = duracion.seconds % 60  # Obtener los minutos restantes
-                nueva_actividad.duracion = timedelta(hours=horas, minutes=minutos, seconds=0)
+                nueva_actividad.duracion = timedelta(
+                    hours=horas, minutes=minutos, seconds=0)
             nueva_actividad.itinerario = itinerario
             nueva_actividad.save()
             return redirect('detalle_itinerario', itinerario_id=itinerario.id)
@@ -90,7 +92,8 @@ def eliminar_itinerario(request, itinerario_id):
     Returns:
         HttpResponse: Redirige a la página de inicio tras un borrado exitoso o si este se cancela
     """
-    itinerario = get_object_or_404(Itinerario, id=itinerario_id, usuario=request.user)
+    itinerario = get_object_or_404(
+        Itinerario, id=itinerario_id, usuario=request.user)
 
     if request.method == 'POST':
         itinerario.delete()
@@ -98,6 +101,7 @@ def eliminar_itinerario(request, itinerario_id):
 
     # Si se cancela la eliminacion vuelve a la vista inicial
     return render(request, 'usuarios/home.html')
+
 
 def borrar_actividad(request, actividad_id):
     """Maneja el borrado de actividades
@@ -114,13 +118,14 @@ def borrar_actividad(request, actividad_id):
     """
     # Obtiene la actividad o muestra un 404 si no existe
     actividad = get_object_or_404(Actividad, id=actividad_id)
-    
+
     # Verifica que el usuario sea el propietario del itinerario antes de eliminar
     if actividad.itinerario.usuario == request.user:
         actividad.delete()
         messages.success(request, 'Actividad eliminada correctamente.')
     else:
-        messages.error(request, 'No tienes permiso para eliminar esta actividad.')
+        messages.error(
+            request, 'No tienes permiso para eliminar esta actividad.')
 
     # Redirige a la pagina de detalles del itinerario
     return redirect('detalle_itinerario', itinerario_id=actividad.itinerario.id)
@@ -166,7 +171,7 @@ def logout_view(request):
 
     Args:
         request(HttpRequest): Solicitud HTTP con la sesion del usuario cargada
-    
+
     Returns:
         HttpResponse: Cierra la sesion del usuario y redirecciona a la vista inicial
     """
