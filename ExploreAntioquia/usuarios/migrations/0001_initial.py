@@ -17,25 +17,29 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Itinerario',
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                ('id', models.BigAutoField(auto_created=True,
+                 primary_key=True, serialize=False, verbose_name='ID')),
                 ('nombre', models.CharField(max_length=200)),
                 ('descripcion', models.TextField(blank=True, null=True)),
                 ('fecha_creacion', models.DateTimeField(auto_now_add=True)),
                 ('duracion_total', models.DurationField(blank=True, null=True)),
                 ('es_publico', models.BooleanField(default=False)),
-                ('usuario', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
+                ('usuario', models.ForeignKey(
+                    on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
             ],
         ),
         migrations.CreateModel(
             name='Actividad',
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                ('id', models.BigAutoField(auto_created=True,
+                 primary_key=True, serialize=False, verbose_name='ID')),
                 ('nombre', models.CharField(max_length=200)),
                 ('tipo_actividad', models.CharField(max_length=100)),
                 ('ubicacion', models.CharField(max_length=200)),
                 ('hora_inicio', models.DateTimeField()),
                 ('duracion', models.DurationField()),
-                ('itinerario', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='actividades', to='usuarios.itinerario')),
+                ('itinerario', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE,
+                 related_name='actividades', to='usuarios.itinerario')),
             ],
         ),
     ]

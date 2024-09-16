@@ -21,10 +21,12 @@ class ItinerarioForm(forms.ModelForm):
 class ActividadForm(forms.ModelForm):
     class Meta:
         model = Actividad
-        fields = ['nombre', 'tipo_actividad', 'ubicacion', 'hora_inicio', 'duracion']
+        fields = ['nombre', 'tipo_actividad',
+                  'ubicacion', 'hora_inicio', 'duracion']
         widgets = {
             'hora_inicio': forms.DateTimeInput(attrs={'type': 'datetime-local'}),
-            'duracion': forms.TextInput(attrs={'placeholder': 'HH:MM'})  # Solo horas y minutos
+            # Solo horas y minutos
+            'duracion': forms.TextInput(attrs={'placeholder': 'HH:MM'})
         }
 
     def clean_duracion(self):
@@ -39,4 +41,5 @@ class ActividadForm(forms.ModelForm):
             # Convertimos a timedelta
             return timedelta(hours=horas, minutes=minutos, seconds=0)
         except ValueError:
-            raise forms.ValidationError("La duración debe estar en el formato HH:MM.")
+            raise forms.ValidationError(
+                "La duración debe estar en el formato HH:MM.")
