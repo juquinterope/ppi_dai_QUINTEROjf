@@ -1,0 +1,41 @@
+{% extends "usuarios/base.html" %}
+
+{% block content %}
+<div class="jumbotron">
+    <div class="container mt-4">
+        <h2 class="display-4">{{ itinerario.nombre }}</h2>
+        <p class="lead">{{ itinerario.descripcion }}</p>
+        <hr class="my-4">
+
+        <h3>Actividades</h3>
+        <!-- Agregamos espacio adicional después de las actividades -->
+        <ul class="list-group mb-5">
+        <ul class="list-group">
+            {% for actividad in actividades %}
+            <li class="list-group-item">
+                {{ actividad.nombre }} - {{ actividad.tipo_actividad }} en {{ actividad.ubicacion }} 
+                (Inicio: {{ actividad.hora_inicio }} | Duración: {{ actividad.duracion }})
+
+                <!-- Boton para borrar la actividad -->
+                <form method="post" action="{% url 'borrar_actividad' actividad.id %}" class="d-inline">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-danger btn-sm">Borrar</button>
+                </form>
+            </li>
+            {% empty %}
+            <li class="list-group-item">No hay actividades en este itinerario.</li>
+            {% endfor %}
+        </ul>
+
+        <!-- Formulario para agregar nueva actividad -->
+        <hr class="my-4">
+        <h4>Agregar nueva actividad</h4>
+        <ul class="list-group mb-5">
+        <form method="post">
+            {% csrf_token %}
+            {{ actividad_form.as_p }}
+            <button type="submit" class="btn btn-success">Agregar Actividad</button>
+        </form>
+    </div>
+</div>  
+{% endblock %}

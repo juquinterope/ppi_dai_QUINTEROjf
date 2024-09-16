@@ -1025,61 +1025,67 @@
           </ul>
       </div>
   </nav>
-  {% if formulario %}
-  <div class="card">
-    <div class="card-body">
-        <form method="POST">
-            {% csrf_token %}
-            <div class="form-group">
-                <label for="municipio">Selecciona un Municipio:</label>
-                <select id="municipio" name="municipio" class="form-control">
-                    <option value="-" selected>-</option>  <!-- Opción por defecto -->
-                    {% for municipio in municipios %}
-                        <option value="{{ municipio }}">{{ municipio }}</option>
-                    {% endfor %}
-                </select>
-            </div>
-            <button type="submit" class="btn btn-primary">Planear</button>
-        </form>
+  {% if user.is_authenticated %}
+    {% if formulario %}
+    <div class="card">
+      <div class="card-body">
+          <form method="POST">
+              {% csrf_token %}
+              <div class="form-group">
+                  <label for="municipio">Selecciona un Municipio:</label>
+                  <select id="municipio" name="municipio" class="form-control">
+                      <option value="-" selected>-</option>  <!-- Opción por defecto -->
+                      {% for municipio in municipios %}
+                          <option value="{{ municipio }}">{{ municipio }}</option>
+                      {% endfor %}
+                  </select>
+              </div>
+              <button type="submit" class="btn btn-primary">Planear</button>
+          </form>
+      </div>
     </div>
-  </div>
-  {% endif %}
-  {% if pois %}
-    <div class="neighborhood-discovery">
-      <div class="places-panel panel no-scroll">
-        <header class="navbar">
-          <div class="search-input">
-            <input class="place-search-input" placeholder="Search nearby places">
-            <button class="place-search-button">
-              <img src="https://fonts.gstatic.com/s/i/googlematerialicons/search/v11/24px.svg" alt="search"/>
-            </button>
+    {% endif %}
+    {% if pois %}
+      <div class="neighborhood-discovery">
+        <div class="places-panel panel no-scroll">
+          <header class="navbar">
+            <div class="search-input">
+              <input class="place-search-input" placeholder="Search nearby places">
+              <button class="place-search-button">
+                <img src="https://fonts.gstatic.com/s/i/googlematerialicons/search/v11/24px.svg" alt="search"/>
+              </button>
+            </div>
+          </header>
+          <div class="results">
+            <ul class="place-results-list"></ul>
           </div>
-        </header>
-        <div class="results">
-          <ul class="place-results-list"></ul>
-        </div>
-        <button class="show-more-button sticky">
-          <span>Show More</span>
-          <img class="right" src="https://fonts.gstatic.com/s/i/googlematerialicons/expand_more/v11/24px.svg" alt="expand"/>
-        </button>
-      </div>
-      <div class="details-panel panel"></div>
-      <div class="map"></div>
-      <div class="photo-modal">
-        <img alt="place photo"/>
-        <div>
-          <button class="back-button">
-            <img class="icon" src="https://fonts.gstatic.com/s/i/googlematerialicons/arrow_back/v11/24px.svg" alt="back"/>
+          <button class="show-more-button sticky">
+            <span>Show More</span>
+            <img class="right" src="https://fonts.gstatic.com/s/i/googlematerialicons/expand_more/v11/24px.svg" alt="expand"/>
           </button>
-          <div class="photo-text">
-            <div class="photo-place"></div>
-            <div class="photo-attrs">Photo by <span></span></div>
+        </div>
+        <div class="details-panel panel"></div>
+        <div class="map"></div>
+        <div class="photo-modal">
+          <img alt="place photo"/>
+          <div>
+            <button class="back-button">
+              <img class="icon" src="https://fonts.gstatic.com/s/i/googlematerialicons/arrow_back/v11/24px.svg" alt="back"/>
+            </button>
+            <div class="photo-text">
+              <div class="photo-place"></div>
+              <div class="photo-attrs">Photo by <span></span></div>
+            </div>
           </div>
         </div>
+        <svg class="marker-pin" xmlns="http://www.w3.org/2000/svg" width="26" height="38" fill="none">
+          <path d="M13 0C5.817 0 0 5.93 0 13.267c0 7.862 5.59 10.81 9.555 17.624C12.09 35.248 11.342 38 13 38c1.723 0 .975-2.817 3.445-7.043C20.085 24.503 26 21.162 26 13.267 26 5.93 20.183 0 13 0Z"/>
+        </svg>
       </div>
-      <svg class="marker-pin" xmlns="http://www.w3.org/2000/svg" width="26" height="38" fill="none">
-        <path d="M13 0C5.817 0 0 5.93 0 13.267c0 7.862 5.59 10.81 9.555 17.624C12.09 35.248 11.342 38 13 38c1.723 0 .975-2.817 3.445-7.043C20.085 24.503 26 21.162 26 13.267 26 5.93 20.183 0 13 0Z"/>
-      </svg>
+    {% endif %}
+  {% else %}
+    <div class="alert alert-warning" role="alert">
+        Por favor, inicie sesión para desbloquear esta función.
     </div>
   {% endif %}
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCg7ipYMSiRjpqYN1A43W2Qm1ExSu3OQ4s&callback=initMap&libraries=places,geometry&solution_channel=GMP_QB_neighborhooddiscovery_v3_cADEF" async defer></script>

@@ -2,9 +2,88 @@
 
 {% block content %}
 <div class="jumbotron">
-    <h1 class="display-4">Bienvenido a ExploreAntioquia</h1>
-    <p class="lead">Esta es la página principal. Aquí puedes encontrar recomendaciones personalizadas para tu viaje.</p>
+    <h1 class="display-4">ExploreAntioquia</h1>
+    <p class="lead">Esta es la página principal. Aquí puedes encontrar tus itinerarios.</p>
     <hr class="my-4">
-    <p>Utiliza la navegación para registrarte o iniciar sesión.</p>
+    {% if user.is_authenticated %}
+        <div class="container mt-4">
+            <h4>Bienvenido, {{ user.username }}, aqui estan tus itineraios</h4>
+            <!-- Botón para abrir el modal de creación de itinerarios -->
+            <button class="btn btn-primary mb-3" data-toggle="modal" data-target="#createItineraryModal">Crear Itinerario</button>
+            <ul class="list-group mb-5">
+                
+            <!-- Modal para crear itinerario -->
+            <div class="modal fade" id="createItineraryModal" tabindex="-1" aria-labelledby="createItineraryModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="createItineraryModalLabel">Crear nuevo itinerario</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <!-- Formulario de itinerario -->
+                            <form method="post">
+                                {% csrf_token %}
+                                {{ itinerario_form.as_p }}
+                                <button type="submit" class="btn btn-success">Guardar Itinerario</button>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Contenedor de itinerarios del usuario -->
+            <div class="row" id="itinerariesContainer">
+                {% for itinerario in itinerarios %}
+                <div class="col-md-4">
+                    <div class="card mb-4">
+                        <div class="card-header">
+                            {{ itinerario.nombre }}
+                        </div>
+                        <div class="card-body">
+                            <p>{{ itinerario.descripcion }}</p>
+                            <a href="{% url 'detalle_itinerario' itinerario.id %}" class="btn btn-info">Ver Detalle</a>
+                            <!-- Botón para abrir el modal de confirmación de eliminación -->
+                            <button class="btn btn-danger" data-toggle="modal" data-target="#deleteItineraryModal{{ itinerario.id }}">Eliminar</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Modal de confirmación de eliminación -->
+                <div class="modal fade" id="deleteItineraryModal{{ itinerario.id }}" tabindex="-1" aria-labelledby="deleteItineraryModalLabel{{ itinerario.id }}" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="deleteItineraryModalLabel{{ itinerario.id }}">Confirmar eliminación</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                ¿Estás seguro de que deseas eliminar el itinerario "{{ itinerario.nombre }}"?
+                            </div>
+                            <div class="modal-footer">
+                                <form method="post" action="{% url 'eliminar_itinerario' itinerario.id %}">
+                                    {% csrf_token %}
+                                    <button type="submit" class="btn btn-danger">Eliminar</button>
+                                </form>
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% empty %}
+                <p>No tienes itinerarios creados.</p>
+                {% endfor %}
+            </div>
+        </div>
+    {% else %}
+        <p>Utiliza la navegación para registrarte o iniciar sesión.</p>
+    {% endif %}
 </div>
 {% endblock %}
