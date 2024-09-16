@@ -34,7 +34,7 @@ class ActividadForm(forms.ModelForm):
         """
         duracion = str(self.cleaned_data['duracion'])
         try:
-            # Separamos en horas y minutos
+            # Separamos en horas y minutos (vamos a despreciar los segundos)
             horas, minutos, segundos = map(int, duracion.split(':'))
             # Convertimos a timedelta
             return timedelta(hours=horas, minutes=minutos, seconds=0)

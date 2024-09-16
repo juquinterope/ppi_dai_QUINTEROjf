@@ -49,6 +49,7 @@
                 Planear Viaje
             </div>
             <div class="card-body">
+                <!-- Form que despliega todos los municipios -->
                 <form method="POST">
                     {% csrf_token %}
                     <div class="form-group">
@@ -65,8 +66,9 @@
             </div>
         </div>
     </div>
-    <!-- Línea divisoria -->
+    <!-- Linea divisoria -->
     <hr style="margin-top: 20px; margin-bottom: 20px; border-top: 1px solid #ccc;">
+    <!-- hoteles es valido si se envió el form inicial (se selecciono un municipio) -->
     {% if hoteles %}
         <div class="container" style="max-width: 400px; float: left; margin-top: 20px;">
             <h3 style="font-size: 1.5rem;">Opiniones Clusterizadas por Hotel</h3>
@@ -95,7 +97,7 @@
                         <!-- Mostrar opiniones -->
                         <ul class="list-group">
                             {% for opinion in data.opiniones %}
-                                <!-- Mostrar opinión solo si el filtro coincide con el clúster, o si no hay filtro aplicado -->
+                                <!-- Mostrar opinion solo si el filtro coincide con el cluster, o si no hay filtro aplicado -->
                                 {% if not keyword or keyword in opinion.cluster_keywords %}
                                     <li class="list-group-item">
                                         <p><strong>Fecha:</strong> {{ opinion.date }}</p>

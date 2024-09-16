@@ -3,12 +3,12 @@
 {% block content %}
 <div class="jumbotron">
     <h1 class="display-4">ExploreAntioquia</h1>
-    <p class="lead">Esta es la página principal. Aquí puedes encontrar tus itinerarios.</p>
+    <p class="lead">Esta es la página principal. Inicia sesion para crear itinerarios.</p>
     <hr class="my-4">
     {% if user.is_authenticated %}
         <div class="container mt-4">
             <h4>Bienvenido, {{ user.username }}, aqui estan tus itineraios</h4>
-            <!-- Botón para abrir el modal de creación de itinerarios -->
+            <!-- Boton para abrir el modal de creacion de itinerarios -->
             <button class="btn btn-primary mb-3" data-toggle="modal" data-target="#createItineraryModal">Crear Itinerario</button>
             <ul class="list-group mb-5">
                 
@@ -48,13 +48,13 @@
                         <div class="card-body">
                             <p>{{ itinerario.descripcion }}</p>
                             <a href="{% url 'detalle_itinerario' itinerario.id %}" class="btn btn-info">Ver Detalle</a>
-                            <!-- Botón para abrir el modal de confirmación de eliminación -->
+                            <!-- Boton para abrir el modal de confirmación de eliminacion -->
                             <button class="btn btn-danger" data-toggle="modal" data-target="#deleteItineraryModal{{ itinerario.id }}">Eliminar</button>
                         </div>
                     </div>
                 </div>
 
-                <!-- Modal de confirmación de eliminación -->
+                <!-- Modal de confirmacion de eliminación -->
                 <div class="modal fade" id="deleteItineraryModal{{ itinerario.id }}" tabindex="-1" aria-labelledby="deleteItineraryModalLabel{{ itinerario.id }}" aria-hidden="true">
                     <div class="modal-dialog">
                         <div class="modal-content">

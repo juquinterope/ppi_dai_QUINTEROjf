@@ -46,6 +46,7 @@
     </nav>
 
     <div class="container mt-4">
+        <!-- Se debe iniciar sesion para usar esta funcion -->
         {% if user.is_authenticated %}
             <div class="card">
                 <div class="card-header">
@@ -57,7 +58,8 @@
                         <div class="form-group">
                             <label for="municipio">Selecciona un Municipio:</label>
                             <select id="municipio" name="municipio" class="form-control">
-                                <option value="-" selected>-</option>  <!-- Opción por defecto -->
+                                <option value="-" selected>-</option>  <!-- Opcion por defecto -->
+                                <!-- Dentro del select se agregaran como opciones todos los municipios -->
                                 {% for municipio in municipios %}
                                     <option value="{{ municipio }}">{{ municipio }}</option>
                                 {% endfor %}
@@ -67,6 +69,7 @@
                     </form>
                 </div>
             </div>
+            <!-- Si se ha seleccionado un municipio, existira un mapa_calor -->
             {% if mapa_calor_base64 %}
                 <div class="mt-4">
                     <img src="data:image/png;base64,{{ mapa_calor_base64 }}" alt="Mapa de Temperaturas" class="img-fluid rounded">
@@ -75,11 +78,9 @@
             {% if restaurantes %}
                 <div class="container mt-5">
                     <h2 class="mb-4">Restaurantes Recomendados en {{ nombre_municipio }}</h2>
-                    <div class="list-group">
-                        <!-- Iterar sobre la lista de restaurantes -->
-                        
-                    </div>
+                    <div class="list-group"></div>
                 </div>
+                <!-- Iterar sobre todos los restaurantes -->
                 {% for restaurante in restaurantes %}
                     <div class="list-group-item list-group-item-action">
                         <h5 class="mb-1">{{ restaurante.nombre }}</h5>

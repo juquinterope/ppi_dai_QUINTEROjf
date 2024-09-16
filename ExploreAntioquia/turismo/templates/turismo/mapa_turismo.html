@@ -985,7 +985,6 @@
       {{/if}}
     </script>
     {% endverbatim %}
-    
   </head>
   <body>
     <!-- Navbar -->
@@ -1025,26 +1024,27 @@
           </ul>
       </div>
   </nav>
-  {% if user.is_authenticated %}
     {% if formulario %}
-    <div class="card">
-      <div class="card-body">
-          <form method="POST">
-              {% csrf_token %}
-              <div class="form-group">
-                  <label for="municipio">Selecciona un Municipio:</label>
-                  <select id="municipio" name="municipio" class="form-control">
-                      <option value="-" selected>-</option>  <!-- Opción por defecto -->
-                      {% for municipio in municipios %}
-                          <option value="{{ municipio }}">{{ municipio }}</option>
-                      {% endfor %}
-                  </select>
-              </div>
-              <button type="submit" class="btn btn-primary">Planear</button>
-          </form>
+      <div class="card">
+        <div class="card-body">
+          <!-- Formulario para seleccionar un municipio -->
+            <form method="POST">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="municipio">Selecciona un Municipio:</label>
+                    <select id="municipio" name="municipio" class="form-control">
+                        <option value="-" selected>-</option>  <!-- Opcion por defecto -->
+                        {% for municipio in municipios %}
+                            <option value="{{ municipio }}">{{ municipio }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-primary">Planear</button>
+            </form>
+        </div>
       </div>
-    </div>
     {% endif %}
+    <!-- pois equivale a las coordenadas del municipio seleccionado -->
     {% if pois %}
       <div class="neighborhood-discovery">
         <div class="places-panel panel no-scroll">
@@ -1083,11 +1083,6 @@
         </svg>
       </div>
     {% endif %}
-  {% else %}
-    <div class="alert alert-warning" role="alert">
-        Por favor, inicie sesión para desbloquear esta función.
-    </div>
-  {% endif %}
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCg7ipYMSiRjpqYN1A43W2Qm1ExSu3OQ4s&callback=initMap&libraries=places,geometry&solution_channel=GMP_QB_neighborhooddiscovery_v3_cADEF" async defer></script>
     <!-- Bootstrap JS (Opcional) -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>

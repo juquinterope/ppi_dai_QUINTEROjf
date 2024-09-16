@@ -172,3 +172,7 @@ def logout_view(request):
     """
     logout(request)
     return redirect('home')
+
+
+def politica(request):
+    return render(request, 'usuarios/politica.html')
