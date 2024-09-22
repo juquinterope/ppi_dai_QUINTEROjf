@@ -180,4 +180,12 @@ def logout_view(request):
 
 
 def politica(request):
+    """Muestra el template con las politicas de privacidad
+
+    Args:
+        request(HttpRequest): Solicitud HTTP
+    
+    Returns:
+        HttpResponse: Vista con las politicas de privacidad
+    """
     return render(request, 'usuarios/politica.html')

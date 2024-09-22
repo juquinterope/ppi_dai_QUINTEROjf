@@ -5,11 +5,25 @@ from datetime import timedelta
 
 
 class UserRegisterForm(forms.ModelForm):
-    password = forms.CharField(widget=forms.PasswordInput)
+    # Los campos originalemte aparecen en ingles, cambiemos los labels
+    password = forms.CharField(widget=forms.PasswordInput, label="Contraseña")
 
     class Meta:
         model = User
+        # Ajustar el idioma del formulario
         fields = ['username', 'password']
+        labels = {
+            'username': 'Nombre de usuario',
+        }
+        help_texts = {
+            'username': 'Requerido. 150 caracteres o menos. Letras, números y @/./+/-/_ solamente.',
+        }
+        error_messages = {
+            'username': {
+                'required': 'Este campo es obligatorio.',
+                'invalid': 'Introduce un nombre de usuario válido.',
+            },
+        }
 
 
 class ItinerarioForm(forms.ModelForm):

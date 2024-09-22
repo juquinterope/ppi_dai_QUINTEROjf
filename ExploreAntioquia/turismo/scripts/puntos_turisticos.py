@@ -63,7 +63,16 @@ def search_places(latitude: float, longitude: float, place_type: str, words: str
 
 
 def search_main_square(latitude: float, longitude: float, radius: int) -> List[Dict[str, Any]]:
-    """Busca el parque principal en caso de que no se encuentren otros lugares."""
+    """Busca el parque principal de un municipio.
+
+    Parámetros:
+    - latitude (float): Latitud del punto de búsqueda.
+    - longitude (float): Longitud del punto de búsqueda.
+    - radius (int): Radio de búsqueda alrededor de las coordenadas en metros (default es 5000).
+
+    Retorna:
+    - List[Dict[str, Any]]: Parque principal del municipio 
+    """
 
     print('Buscando parque principal')
     # Parámetros para buscar el parque principal
