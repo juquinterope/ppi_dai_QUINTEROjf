@@ -184,7 +184,7 @@ def politica(request):
 
     Args:
         request(HttpRequest): Solicitud HTTP
-    
+
     Returns:
         HttpResponse: Vista con las politicas de privacidad
     """
