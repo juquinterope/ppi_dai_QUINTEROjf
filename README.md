@@ -42,4 +42,7 @@ leaflet: Mapas interactivos optimizados para el navegador.
 ## Mas información
 Desarrollado por: Juan Fernando Quintero Perez
 
-Contacto : [Linkedln](https://www.linkedin.com/in/juan-fernando-quintero-perez-9097b7279/)
+Contacto :
+
+[![](https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/juan-fernando-quintero-perez-9097b7279/)
+&nbsp;
